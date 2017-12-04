@@ -4,7 +4,7 @@ const chai = require('chai');
 const chatHttp = require('chai-http');
 const mocha = require('mocha');
 const should = chai.should();
-const { app } = require('../server');
+const { app, runServer, closeServer } = require('../server');
 
 chai.use(chatHttp);
 
