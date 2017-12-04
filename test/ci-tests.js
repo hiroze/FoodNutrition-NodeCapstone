@@ -6,30 +6,20 @@ const mocha = require('mocha');
 const should = chai.should();
 const { app, runServer, closeServer } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
-const mongoose = require('mongoose');
 
 chai.use(chaiHttp);
 
-const tearDownDb = () => {
-  console.warn('Deleting database');
-  return mongoose.connection.dropDatabase();
-};
+// const tearDownDb = () => {
+//   console.warn('Deleting database');
+//   return mongoose.connection.dropDatabase();
+// };
 
 
 describe('Food Item API Resource', function() {
   
   before(function() {
     console.log('starting web server for tests...');
-
     return runServer(TEST_DATABASE_URL);
-  });
-
-  // beforeEach(function() {
-  //   return xxxx();
-  // });
-
-  afterEach(function() {
-    return tearDownDb();
   });
 
   after(function() {

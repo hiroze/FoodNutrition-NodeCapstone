@@ -9,11 +9,11 @@ mongoose.Promise = global.Promise;
 
 //__dirname???
 app.use(express.static('public'));
-app.listen(process.env.PORT || 8080);
+// app.listen(process.env.PORT || 8080);
 
 let server;
 
-const runServer = () =>
+const runServer = (DATABASE_URL, PORT = 8080) =>
 {
   return new Promise((resolve, reject) => {
     mongoose.connect(DATABASE_URL, { useMongoClient: true }, err => {
