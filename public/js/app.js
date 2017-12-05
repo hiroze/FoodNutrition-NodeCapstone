@@ -13,6 +13,8 @@ const renderPage = function (store) {
   }
 };
 
+
+
 const renderResults = function (store) {
   const listItems = store.list.map((item) => {
     return `<li id="${item.id}">

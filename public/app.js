@@ -1,6 +1,4 @@
-'use strict';
-
-const 
+'use strict'; 
 
 const MOCK_NUTRITION_UPDATES =  [
 

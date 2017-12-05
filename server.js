@@ -4,14 +4,15 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
-const data = require('./db/seed-data')
+const FoodNutrition  = require('./db/models');
+const data = require('./db/seed-data');
 
 mongoose.Promise = global.Promise;
 
 //__dirname???
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 app.get('/v1/items', (req, res) =>{
   res.json(data);
@@ -21,10 +22,24 @@ app.get('/v1/items/:id', (req, res) =>{
   res.json(data[req.params.id]);
 });
 
-app.post('/v1/items', jsonParser, (req,res) => {
-  console.log(req.body); //incoming input from user
+app.post('/v1/items', (req,res) => {
+ //incoming input from user
   //save to db here
-  res.json(req.body);
+
+  FoodNutrition
+    .create({
+      name: req.body.name,
+      servingSize: req.body.servingSize,
+      fat: req.body.fat,
+      carbs: req.body.carbs,
+      protein: req.body.protein,
+    })
+    .then(item => res.status(201).json(item.apiRepr()));
+
+      // console.log(item);
+      // res.json(item.apiRepr());
+    
+ 
 });
 
 
@@ -36,10 +51,10 @@ app.post('/v1/items', jsonParser, (req,res) => {
 
 let server;
 
-const runServer = (DATABASE_URL, PORT = 8080) =>
+const runServer = (db = DATABASE_URL, PORT = 8080) =>
 {
   return new Promise((resolve, reject) => {
-    mongoose.connect(DATABASE_URL, { useMongoClient: true }, err => {
+    mongoose.connect(db, { useMongoClient: true }, err => {
       if (err) {
         return reject(err);
       }
@@ -72,10 +87,14 @@ const closeServer = () => {
 
 };
 
-if (require.main === module) { 
-  app.listen(process.env.PORT || 8080, function () { 
-    console.info(`App listening on ${this.address().port}`); 
-  }); 
+// if (require.main === module) { 
+//   app.listen(process.env.PORT || 8080, function () { 
+//     console.info(`App listening on ${this.address().port}`); 
+//   }); 
+// }
+
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
 }
 
 module.exports = { app, runServer, closeServer };
