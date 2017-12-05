@@ -9,7 +9,16 @@ mongoose.Promise = global.Promise;
 
 //__dirname???
 app.use(express.static('public'));
-// app.listen(process.env.PORT || 8080);
+
+// app.get('/', (req, res) =>{
+//   res.send(console.log('hello world'));
+// });
+
+// app.get('/', (req, res) => { 
+//   res.sendFile(__dirname + '/index.html');
+//   console.log(res+'test'); 
+// });
+
 
 let server;
 
