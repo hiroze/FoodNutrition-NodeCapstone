@@ -1,0 +1,39 @@
+[
+    
+            {
+                "id": 1,
+                "name": "Wild Rice",
+                "servingSize": 1,
+                "fat": 10,
+                "carbs": 30,
+                "protein": 25,
+                "totalCalories": 300
+            },
+            {
+                "id": 2,
+                "name": "Apple",
+                "servingSize": 1,
+                "fat": 10,
+                "carbs": 25,
+                "protein": 15,
+                "totalCalories": 200
+            },
+            {
+                "id": 3,
+                "name": "Potato",
+                "servingSize": 1,
+                "fat": 10,
+                "carbs": 25,
+                "protein": 15,
+                "totalCalories": 200
+            },
+            {
+                "id": 4,
+                "name": "Turkey",
+                "servingSize": 1,
+                "fat": 10,
+                "carbs": 25,
+                "protein": 15,
+                "totalCalories": 200
+            }
+]
