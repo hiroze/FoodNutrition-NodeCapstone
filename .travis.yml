@@ -1,6 +1,12 @@
-language: node_js 
-node_js: 
- - '8.7.0' 
+language: node_js
+node_js:
+- 8.7.0
 services:
- - mongodb
-
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: b8YAoDlpRy0FAHKb8LzE0izh7skPSP2VY4mRZRuB96bhaN+8nC/T+azlrkdIMOMYWk+J17AGJut2S9raYvgD7yyO0UKcAANjtxGvRueJfr7INXiFpWslkZcBToNuSfiJd+LnoNp2nJFyTGLiVPROlT/cOK1qKKSFRviZfjcwZQWHdzqtUY7j4SHcxUCqTDdY00pPm3zNqcvuvV3uwfgD7vXW79R7IRgOWeC6Uyg/CzTtzHHRuWG9RlqBCHfJ0RmAZDISzOBDR1fhI4vP8lceuuF09zs9n47Q2gA+csHp/haQtNVDDXSPp+o4AbpRwUcNnXX6dnpRuHMtkyQBswzHhvtAiVIeUH70y9wA52fT4zDThVkhBDsYWNAHUQ+H12xrxa4uQxPMjlmz66p0W8HzMsf+SjBOWwQOxGFbXrztvERL+6HVsqBcCM991qsfpnPV9Tf8mIYm9jSvfr+bP98qYMjR0VAkyDegg5TOMt6s67/QK+dkEeTCTVACgXAFZvX4D97aK0SyNGBfsnrU3AYlU+h0cjzq8UACeFQS6SPcRYZ4vibnMLnLY/OiaFqP8uE1UnzEQTEPhcKUKTXMDeg6LJ+5iSB/A2/vGl1vuX/wbraRQzIUdP/3Nim3w53IWt2pWIAThAmFyk2aayAY5ve/bx47/w9MsrKzD5Jji29if/g=
+  app: immense-lowlands-79625
+  on:
+    repo: thinkful-cohort-16/FoodNutrition-NodeCapstone

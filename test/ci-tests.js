@@ -25,7 +25,6 @@ describe('index page', function () {
     return closeServer();
   });  
       
-
   it('should exist', function () {
     return chai.request(app)
       .get('/')
