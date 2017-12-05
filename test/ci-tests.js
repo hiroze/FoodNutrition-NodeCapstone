@@ -14,26 +14,26 @@ chai.use(chaiHttp);
 //   return mongoose.connection.dropDatabase();
 // };
 
-describe('index page', function () {
+// describe('index page', function () {
 
-  // before(function() {
-  //   console.log('starting web server for tests...');
-  //   return runServer(TEST_DATABASE_URL);
-  // });
+//   // before(function() {
+//   //   console.log('starting web server for tests...');
+//   //   return runServer(TEST_DATABASE_URL);
+//   // });
 
-  // after(function() {
-  //   return closeServer();
-  // });  
+//   // after(function() {
+//   //   return closeServer();
+//   // });  
       
 
-  it('should exist', function () {
-    return chai.request(app)
-      .get('/')
-      .then(function (res) {
-        res.should.have.status(200);
-      });
-  });
-});
+//   it('should exist', function () {
+//     return chai.request(app)
+//       .get('/')
+//       .then(function (res) {
+//         res.should.have.status(200);
+//       });
+//   });
+// });
 
 // describe('Food Item API Resource', function() {
   
