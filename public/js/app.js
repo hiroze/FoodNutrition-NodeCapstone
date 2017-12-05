@@ -16,7 +16,7 @@ const renderPage = function (store) {
 const renderResults = function (store) {
   const listItems = store.list.map((item) => {
     return `<li id="${item.id}">
-                <a href="${item.url}" class="detail">${item.Name}</a>-${item["Total Calories"]}
+                <a href="${item.url}" class="detail">${item.name}</a>-${item.totalCalories}
               </li>`;
   });
   $('#result').empty().append('<ul>').find('ul').append(listItems);
@@ -32,7 +32,7 @@ const renderEdit = function (store) {
 const renderDetail = function (store) {
   const el = $('#detail');
   const item = store.item;
-  el.find('.name').text(item.Name);
+  el.find('.name').text(item.name);
   el.find('.serve-size').text(item.servingSize);
   el.find('.fat').text(item.fat);
   el.find('.carbs').text(item.carbs);

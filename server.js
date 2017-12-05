@@ -3,7 +3,8 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
 const data = require('./db/seed-data')
 
@@ -20,7 +21,7 @@ app.get('/v1/items/:id', (req, res) =>{
   res.json(data[req.params.id]);
 });
 
-app.post('/v1/items', (req,res) => {
+app.post('/v1/items', jsonParser, (req,res) => {
   console.log(req.body); //incoming input from user
   //save to db here
   res.json(req.body);
