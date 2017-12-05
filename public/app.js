@@ -1,5 +1,7 @@
 'use strict';
 
+const 
+
 const MOCK_NUTRITION_UPDATES =  [
 
   {
@@ -36,6 +38,7 @@ const MOCK_NUTRITION_UPDATES =  [
   }
 ];
 
+console.table(MOCK_NUTRITION_UPDATES);
 //functions to show representation of data
 //4 views (5 including 'about')
 
