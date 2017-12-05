@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
 const FoodNutrition  = require('./db/models');
 const data = require('./db/seed-data');
@@ -22,9 +23,19 @@ app.get('/v1/items/:id', (req, res) =>{
   res.json(data[req.params.id]);
 });
 
-app.post('/v1/items', (req,res) => {
+app.post('/v1/items', jsonParser, (req,res) => {
  //incoming input from user
   //save to db here
+  console.log(req.body)
+  const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
+  for (let i=0; i<requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      let message = `Missing ${field} in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
 
   FoodNutrition
     .create({
@@ -36,9 +47,6 @@ app.post('/v1/items', (req,res) => {
     })
     .then(item => res.status(201).json(item.apiRepr()));
 
-      // console.log(item);
-      // res.json(item.apiRepr());
-    
  
 });
 
