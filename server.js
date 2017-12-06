@@ -19,8 +19,7 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json());
 
-app.get('/v1/items', (req, res) => {
-  
+app.get('/v1/items', (req, res) => {  
   FoodNutrition
     .find({})
     .then(items => {
@@ -28,25 +27,56 @@ app.get('/v1/items', (req, res) => {
     });
 });
 
-app.get('/v1/items/:id', jsonParser, (req, res) =>{
-  
+app.get('/v1/items/:id', (req, res) =>{
   FoodNutrition
-    .findById(req.params.id)
-    .then(item => {
-      res.status(200).json(item.apiRepr());
-    });
+  .findById(req.params.id)
+  .then(result => {
+    res.json(result.apiRepr());
+  })
 });
 
 app.post('/v1/items', jsonParser, (req,res) => {
-
+  //incoming input from user
+  //save to db here
+  //db validation error persists
+  const emptyStr = "";
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
-  for (let i=0; i<requiredFields.length; i++) {
+  for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
+
+    if (req.body.name.length === 0) {
+      const msg = 'Name cannot be empty';
+      return res.status(400).send(msg);
+    }
+
+    if (Number(req.body.name)) {
+      const msg = 'Name must contain letters';
+      return res.status(400).send(msg);
+
+    }
+    if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Serving size cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.fat < 0 || req.body.fat === null || req.body.fat === emptyStr ) {
+      const msg = 'Fat cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.carbs < 0 || req.body.carbs === null || req.body.carbs === emptyStr ) {
+      const msg = 'Carbs cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.protein < 0 || req.body.protein === null || req.body.protein === emptyStr ) {
+      const msg = 'Protein cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+
     if (!(field in req.body)) {
       let message = `Missing ${field} in request body`;
       console.error(message);
       return res.status(400).send(message);
     }
+    
   }
 
   FoodNutrition
@@ -57,8 +87,11 @@ app.post('/v1/items', jsonParser, (req,res) => {
       carbs: req.body.carbs,
       protein: req.body.protein,
     })
-    .then(item => res.status(201).json(item.apiRepr()));
-
+    .then(item => res.status(201).json(item.apiRepr()))
+    .catch(err => { 
+      console.log(err); 
+      res.status(500).send({error:'Internal server error'}); 
+    });
  
 });
 
@@ -67,6 +100,14 @@ app.delete('/v1/items/:id', (req, res) => {
     .findByIdAndRemove(req.params.id)
     .then(res.status(204).end())
     .catch(err => res.status(500).send('Something went wrong.'));
+
+
+app.put('/v1/items/:id', jsonParser, (req,res) => {
+  if ((req.params.id) !== req.body.id) {
+    const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
+    res.status(400).json({message: msg});
+
+  }
 });
 
 
