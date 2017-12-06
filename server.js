@@ -31,18 +31,48 @@ app.get('/v1/items/:id', (req, res) =>{
   })
 });
 
-app.post('/v1/items', (req,res) => {
- //incoming input from user
+app.post('/v1/items', jsonParser, (req,res) => {
+  //incoming input from user
   //save to db here
-  
+  //db validation error persists
+  const emptyStr = "";
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
+
+    if (req.body.name.length === 0) {
+      const msg = 'Name cannot be empty';
+      return res.status(400).send(msg);
+    }
+
+    if (Number(req.body.name)) {
+      const msg = 'Name must contain letters';
+      return res.status(400).send(msg);
+
+    }
+    if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Serving size cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.fat < 0 || req.body.fat === null || req.body.fat === emptyStr ) {
+      const msg = 'Fat cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.carbs < 0 || req.body.carbs === null || req.body.carbs === emptyStr ) {
+      const msg = 'Carbs cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.protein < 0 || req.body.protein === null || req.body.protein === emptyStr ) {
+      const msg = 'Protein cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+
     if (!(field in req.body)) {
       let message = `Missing ${field} in request body`;
       console.error(message);
       return res.status(400).send(message);
     }
+    
   }
 
   foodnutrition
@@ -54,11 +84,11 @@ app.post('/v1/items', (req,res) => {
       protein: req.body.protein,
     })
     .then(item => res.status(201).json(item.apiRepr()))
-    .catch(err => {
-      console.error(err);
-      res.status(400).send(err.message);
+    .catch(err => { 
+      console.log(err); 
+      res.status(500).send({error:'Internal server error'}); 
     });
-    
+ 
 });
 
 
