@@ -34,8 +34,8 @@ const renderTable = function() {
   const columns = 
     `<thead>
       <tr>
-        <th>Name</th>
-        <th>Total Calories</th>
+        <th>Item Name</th>
+        <th>Calories</th>
     </thead>`;
   $('#result').append(columns);
 };
@@ -47,9 +47,21 @@ const renderEdit = function (store) {
   el.find('[name=content]').val(item.content);
 }; 
 
+const renderDetailTable = function(store) {
+  const columns = 
+  `<thead>
+    <tr>
+      <th>Item Name</th>
+    </tr>
+  `;
+  $('legend').append(columns);
+};
+
+
 const renderDetail = function (store) {
   const el = $('#detail');
   const item = store.item;
+  renderDetailTable();
   el.find('.name').text(item.name);
   el.find('.serve-size').text(item.servingSize);
   el.find('.fat').text(item.fat);

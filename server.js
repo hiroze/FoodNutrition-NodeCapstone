@@ -120,6 +120,13 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
 
 });
 
+app.delete('/v1/items/:id', (req, res) => {
+  FoodNutrition 
+    .findByIdAndRemove(req.params.id)
+    .then(res.status(204).end())
+    .catch(err => res.status(500).send('Something went wrong.'));
+});
+
 
 let server;
 
