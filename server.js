@@ -63,11 +63,12 @@ app.post('/v1/items', jsonParser, (req,res) => {
  
 });
 
-
-// app.get('/', (req, res) => { 
-//   res.sendFile(__dirname + '/index.html');
-//   console.log(res+'test'); 
-// });
+app.delete('/v1/items/:id', (req, res) => {
+  FoodNutrition 
+    .findByIdAndRemove(req.params.id)
+    .then(res.status(204).end())
+    .catch(err => res.status(500).send('Something went wrong.'));
+});
 
 
 let server;
@@ -107,12 +108,6 @@ const closeServer = () => {
   });
 
 };
-
-// if (require.main === module) { 
-//   app.listen(process.env.PORT || 8080, function () { 
-//     console.info(`App listening on ${this.address().port}`); 
-//   }); 
-// }
 
 if (require.main === module) {
   runServer().catch(err => console.error(err));
