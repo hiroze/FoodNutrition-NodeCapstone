@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
-const foodnutrition  = require('./db/models');
+const FoodNutrition  = require('./db/models');
 const data = require('./db/seed-data');
 
 mongoose.Promise = global.Promise;
@@ -15,22 +15,23 @@ mongoose.Promise = global.Promise;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+// ===== GET =====
 app.get('/v1/items', (req, res) => {
-  foodnutrition
+  FoodNutrition
   .find()
   .then(result => {
     res.json(result.map(item => item.apiRepr()));
   })
 });
-
+// ===== GET by ID =====
 app.get('/v1/items/:id', (req, res) =>{
-  foodnutrition
+  FoodNutrition
   .findById(req.params.id)
   .then(result => {
     res.json(result.apiRepr());
   })
 });
-
+// ===== POST =====
 app.post('/v1/items', jsonParser, (req,res) => {
   //incoming input from user
   //save to db here
@@ -75,7 +76,7 @@ app.post('/v1/items', jsonParser, (req,res) => {
     
   }
 
-  foodnutrition
+  FoodNutrition
     .create({
       name: req.body.name,
       servingSize: req.body.servingSize,
@@ -91,13 +92,28 @@ app.post('/v1/items', jsonParser, (req,res) => {
  
 });
 
-
+// ===== PUT =====
 app.put('/v1/items/:id', jsonParser, (req,res) => {
+//checks if id and body match
   if ((req.params.id) !== req.body.id) {
     const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
     res.status(400).json({message: msg});
-
   }
+  const edited = {};
+  const editableItems = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
+  editableItems.forEach(function(item) {
+    if (item in req.body) {
+      edited[item] = req.body[item];
+    }
+  })
+  FoodNutrition
+  .findByIdAndUpdate(req.params.id, {$set: edited}, {new: true})
+  .then(editedItem => res.status(204).end())
+  .catch(err => { 
+    console.log(err); 
+    res.status(500).send({error:'Internal server error'}); 
+  });
+
 });
 
 
