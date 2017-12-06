@@ -1,3 +1,14 @@
+* {
+  box-sizing: border-box;
+  font-family: sans-serif; 
+}
+
+body {
+  width: 960px;
+  height: 900px
+}
+
+
 form, section {
   margin-top: 10px;
 }
@@ -25,9 +36,29 @@ button {
   display: inline
 }
 
+td > a {
+  text-decoration: none;
+}
+
+
 #search,
 #detail,
 #create,
 #edit {
-  /* display: none; */
+  display: none;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+#result {
+  margin-bottom: 20px;
 }

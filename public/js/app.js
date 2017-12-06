@@ -13,15 +13,39 @@ const renderPage = function (store) {
   }
 };
 
-
+// const renderResults = function (store) {
+//   const listItems = store.list.map((item) => {
+//     return `<li id="${item.id}">
+//                 <a href="${item.url}" class="detail">${item.name}</a>-${item.totalCalories}
+//               </li>`;
+//   });
+//   $('#result').empty().append('<ul>').find('ul').append(listItems);
+// };
 
 const renderResults = function (store) {
   const listItems = store.list.map((item) => {
-    return `<li id="${item.id}">
-                <a href="${item.url}" class="detail">${item.name}</a>-${item.totalCalories}
-              </li>`;
+    console.log(item);
+    return `<tr id="${item.id}">
+                <td>
+                <a href="${item.id}" class="detail">${item.name}</a>
+                </td> 
+                <td>${item.totalCals}</td>
+              </tr>`;
   });
-  $('#result').empty().append('<ul>').find('ul').append(listItems);
+  //removed the .empty() that was immediately after result
+  $('#result').append(renderTable()).find('thead').append(listItems);
+  
+  // $('#result').append('<ul>').find('ul').append(`<table>${listItems}</table>`);
+};
+
+const renderTable = function() {
+  const columns = 
+    `<thead>
+      <tr>
+        <th>Name</th>
+        <th>Total Calories</th>
+    </thead>`;
+  $('#result').append(columns);
 };
 
 const renderEdit = function (store) {
@@ -56,6 +80,7 @@ const handleSearch = function (event) {
   api.search(query)
     .then(response => {
       store.list = response;
+      // renderTable(store);
       renderResults(store);
 
       store.view = 'search';
@@ -112,8 +137,8 @@ const handleDetails = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-
-  const id = el.closest('li').attr('id');
+///was li and changed to td
+  const id = el.closest('tr').attr('id');
   api.details(id)
     .then(response => {
       store.item = response;
