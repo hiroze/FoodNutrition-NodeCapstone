@@ -13,14 +13,6 @@ const renderPage = function (store) {
   }
 };
 
-// const renderResults = function (store) {
-//   const listItems = store.list.map((item) => {
-//     return `<li id="${item.id}">
-//                 <a href="${item.url}" class="detail">${item.name}</a>-${item.totalCalories}
-//               </li>`;
-//   });
-//   $('#result').empty().append('<ul>').find('ul').append(listItems);
-// };
 
 const renderResults = function (store) {
   const listItems = store.list.map((item) => {
@@ -137,7 +129,7 @@ const handleDetails = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-///was li and changed to td
+  // was li and changed to tr
   const id = el.closest('tr').attr('id');
   api.details(id)
     .then(response => {
