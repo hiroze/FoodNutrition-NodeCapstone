@@ -24,17 +24,45 @@ app.get('/v1/items/:id', (req, res) =>{
 });
 
 app.post('/v1/items', jsonParser, (req,res) => {
- //incoming input from user
+  //incoming input from user
   //save to db here
-  console.log(req.body)
+  //db validation error persists
+  const emptyStr = "";
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
+
+    if (req.body.name.length === 0) {
+      const msg = 'Name cannot be empty';
+      return res.status(400).send(msg);
+    }
+    if (req.body.name !== typeof String) {
+      const msg = 'Name must be a string';
+      return res.status(400).send(msg);
+    }
+    if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Serving size cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.fat < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Serving size cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.carbs < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Serving size cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+    if (req.body.protein < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Serving size cannot be empty or negative.';
+      return res.status(400).send(msg);
+    }
+
     if (!(field in req.body)) {
       let message = `Missing ${field} in request body`;
       console.error(message);
       return res.status(400).send(message);
     }
+    
   }
 
   FoodNutrition
@@ -45,8 +73,11 @@ app.post('/v1/items', jsonParser, (req,res) => {
       carbs: req.body.carbs,
       protein: req.body.protein,
     })
-    .then(item => res.status(201).json(item.apiRepr()));
-
+    .then(item => res.status(201).json(item.apiRepr()))
+    .catch(err => { 
+      console.log(err); 
+      res.status(500).send({error:'Internal server error'}); 
+    });
  
 });
 
