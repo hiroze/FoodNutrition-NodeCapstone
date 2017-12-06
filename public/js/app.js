@@ -24,8 +24,8 @@ const renderResults = function (store) {
                 <td>${item.totalCals}</td>
               </tr>`;
   });
-  //removed the .empty() that was immediately after result
-  $('#result').append(renderTable()).find('thead').append(listItems);
+  
+  $('#result').empty().append(renderTable()).find('thead').append(listItems);// <--rendering table on home page
   
   // $('#result').append('<ul>').find('ul').append(`<table>${listItems}</table>`);
 };
@@ -161,14 +161,16 @@ const handleRemove = function (event) {
   const store = event.data;
   const id = store.item.id;
 
-  api.remove(id, store.token)
+  api.remove(id, store)
     .then(() => {
       store.list = null; //invalidate cached list results
-      return handleSearch(event);
+      //return handleSearch(event);
+      return renderTable();
     }).catch(err => {
       console.error(err);
     });
 };
+
 const handleViewCreate = function (event) {
   event.preventDefault();
   const store = event.data;
@@ -179,7 +181,7 @@ const handleViewList = function (event) {
   event.preventDefault();
   const store = event.data;
   if (!store.list) {
-    handleSearch(event);
+    //handleSearch(event);
     return;
   }
   store.view = 'search';
@@ -199,7 +201,7 @@ jQuery(function ($) {
 
   const STORE = {
     demo: false,        // display in demo mode true | false
-    view: 'list',       // current view: list | details | create | edit 
+    view: 'list',       // current view: home | details | contribute | edit 
     query: {},          // search query values
     list: null,         // search result - array of objects (documents)
     item: null,         // currently selected document

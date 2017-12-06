@@ -120,6 +120,7 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
 
 });
 
+// ===== DELETE =====
 app.delete('/v1/items/:id', (req, res) => {
   FoodNutrition 
     .findByIdAndRemove(req.params.id)
