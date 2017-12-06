@@ -53,6 +53,14 @@ table {
   width: 100%;
 }
 
+.nutritionTable > table {
+  width: 80%;
+}
+
+.nutritionTable > th {
+  
+}
+
 td, th {
   border: 1px solid #999;
   padding: 0.5rem;
@@ -62,3 +70,4 @@ td, th {
 #result {
   margin-bottom: 20px;
 }
+
