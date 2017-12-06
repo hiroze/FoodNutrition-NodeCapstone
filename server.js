@@ -36,24 +36,26 @@ app.post('/v1/items', jsonParser, (req,res) => {
       const msg = 'Name cannot be empty';
       return res.status(400).send(msg);
     }
-    if (req.body.name !== typeof String) {
-      const msg = 'Name must be a string';
+
+    if (Number(req.body.name)) {
+      const msg = 'Name must contain letters';
       return res.status(400).send(msg);
+
     }
     if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
       const msg = 'Serving size cannot be empty or negative.';
       return res.status(400).send(msg);
     }
-    if (req.body.fat < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
-      const msg = 'Serving size cannot be empty or negative.';
+    if (req.body.fat < 0 || req.body.fat === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Fat cannot be empty or negative.';
       return res.status(400).send(msg);
     }
-    if (req.body.carbs < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
-      const msg = 'Serving size cannot be empty or negative.';
+    if (req.body.carbs < 0 || req.body.carbs === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Carbs cannot be empty or negative.';
       return res.status(400).send(msg);
     }
-    if (req.body.protein < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
-      const msg = 'Serving size cannot be empty or negative.';
+    if (req.body.protein < 0 || req.body.protein === null || req.body.servingSize === emptyStr ) {
+      const msg = 'Protein cannot be empty or negative.';
       return res.status(400).send(msg);
     }
 
