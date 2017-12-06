@@ -19,22 +19,23 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json());
 
-app.get('/v1/items', (req, res) => {  
+// ===== GET =====
+app.get('/v1/items', (req, res) => {
   FoodNutrition
-    .find({})
-    .then(items => {
-      res.status(200).json(items.map(item => item.apiRepr()));
-    });
+  .find()
+  .then(result => {
+    res.json(result.map(item => item.apiRepr()));
+  })
 });
-
-app.get('/v1/items/:id', (req, res) => {
+// ===== GET by ID =====
+app.get('/v1/items/:id', (req, res) =>{
   FoodNutrition
   .findById(req.params.id)
   .then(result => {
     res.json(result.apiRepr());
   })
 });
-
+// ===== POST =====
 app.post('/v1/items', jsonParser, (req,res) => {
   //incoming input from user
   //save to db here
@@ -95,19 +96,35 @@ app.post('/v1/items', jsonParser, (req,res) => {
  
 });
 
+// ===== PUT =====
+app.put('/v1/items/:id', jsonParser, (req,res) => {
+//checks if id and body match
+  if ((req.params.id) !== req.body.id) {
+    const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
+    res.status(400).json({message: msg});
+  }
+  const edited = {};
+  const editableItems = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
+  editableItems.forEach(function(item) {
+    if (item in req.body) {
+      edited[item] = req.body[item];
+    }
+  })
+  FoodNutrition
+  .findByIdAndUpdate(req.params.id, {$set: edited}, {new: true})
+  .then(editedItem => res.status(204).end())
+  .catch(err => { 
+    console.log(err); 
+    res.status(500).send({error:'Internal server error'}); 
+  });
+
+});
+
 app.delete('/v1/items/:id', (req, res) => {
   FoodNutrition 
     .findByIdAndRemove(req.params.id)
     .then(res.status(204).end())
     .catch(err => res.status(500).send('Something went wrong.'));
-});
-
-
-app.put('/v1/items/:id', jsonParser, (req,res) => {
-  if ((req.params.id) !== req.body.id) {
-    const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
-    res.status(400).json({message: msg});
-  }
 });
 
 

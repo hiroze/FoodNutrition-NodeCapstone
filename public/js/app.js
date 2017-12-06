@@ -47,17 +47,17 @@ const renderEdit = function (store) {
   el.find('[name=content]').val(item.content);
 }; 
 
-const renderDetailTable = function(store) {
-  const item = store.item;
-  const column = `
-  <thead>
-    <tr>
-      <th>${item.name}</th>
-    </tr>
-  </thead>
-  `;
-  $('#details').append(column);
-};
+// const renderDetailTable = function(store) {
+//   const item = store.item;
+//   const column = `
+//   <thead>
+//     <tr>
+//       <th>${item.name}</th>
+//     </tr>
+//   </thead>
+//   `;
+//   $('#details').append(column);
+// };
 
 // const renderDetail = function (store) {
 //   const el = $('#detail');
@@ -74,26 +74,37 @@ const renderDetailTable = function(store) {
 // const createTable = function() {
 
 // }
+// not using
+//   const columns = 
+//   `<thead>
+//     <tr>
+//       <th>Item Name</th>
+//     </tr>
+//   `;
+//   $('legend').append(columns);
+// };
 
 const renderDetail = function (store) {
   const el = $('#detail');
   const item = store.item;
-  const details = `<tr id="${item.id}">Serving Size(g)
-    <td>${item.servingSize}</td> 
- </tr>
-<tr>Fat(g)
-    <td>${item.fat}</td> 
-</tr>
-<tr>Carbs(g)
-    <td>${item.carbs}</td> 
-</tr>
-<tr>Protein(g)
-    <td>${item.protein}</td> 
-</tr>
-<tr>Total Calories
-  <td>${item.totalCals}</td> 
-</tr>
-`;
+  //not using 
+//   const details = `<tr id="${item.id}">Serving Size(g)
+//     <td>${item.servingSize}</td> 
+//  </tr>
+// <tr>Fat(g)
+//     <td>${item.fat}</td> 
+// </tr>
+// <tr>Carbs(g)
+//     <td>${item.carbs}</td> 
+// </tr>
+// <tr>Protein(g)
+//     <td>${item.protein}</td> 
+// </tr>
+// <tr>Total Calories
+//   <td>${item.totalCals}</td> 
+// </tr>
+// `;
+  //only using this table below
   const detailTable = `<table class='tableDetailView'>
   <thead>
   <tr>
@@ -124,9 +135,19 @@ const renderDetail = function (store) {
   </tbody>
 </table>`;
 $('.nutritionTable').empty().append(detailTable);
+};
 
   // el.append(renderDetailTable(store)).find('thead').append(details);
-};
+=======
+  //not using
+//   renderDetailTable();
+//   el.find('.name').text(item.name);
+//   el.find('.serve-size').text(item.servingSize);
+//   el.find('.fat').text(item.fat);
+//   el.find('.carbs').text(item.carbs);
+//   el.find('.protein').text(item.protein);
+//   el.find('.cal-count').text(item.totalCalories);
+// };
   // el.find('.name').text(item.name);
   // el.find('.serve-size').text(item.servingSize);
   // el.find('.fat').text(item.fat);
