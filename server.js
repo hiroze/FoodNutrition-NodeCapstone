@@ -46,15 +46,15 @@ app.post('/v1/items', jsonParser, (req,res) => {
       const msg = 'Serving size cannot be empty or negative.';
       return res.status(400).send(msg);
     }
-    if (req.body.fat < 0 || req.body.fat === null || req.body.servingSize === emptyStr ) {
+    if (req.body.fat < 0 || req.body.fat === null || req.body.fat === emptyStr ) {
       const msg = 'Fat cannot be empty or negative.';
       return res.status(400).send(msg);
     }
-    if (req.body.carbs < 0 || req.body.carbs === null || req.body.servingSize === emptyStr ) {
+    if (req.body.carbs < 0 || req.body.carbs === null || req.body.carbs === emptyStr ) {
       const msg = 'Carbs cannot be empty or negative.';
       return res.status(400).send(msg);
     }
-    if (req.body.protein < 0 || req.body.protein === null || req.body.servingSize === emptyStr ) {
+    if (req.body.protein < 0 || req.body.protein === null || req.body.protein === emptyStr ) {
       const msg = 'Protein cannot be empty or negative.';
       return res.status(400).send(msg);
     }
