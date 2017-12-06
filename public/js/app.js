@@ -138,7 +138,6 @@ $('.nutritionTable').empty().append(detailTable);
 };
 
   // el.append(renderDetailTable(store)).find('thead').append(details);
-=======
   //not using
 //   renderDetailTable();
 //   el.find('.name').text(item.name);
