@@ -27,7 +27,7 @@ app.get('/v1/items', (req, res) => {
     });
 });
 
-app.get('/v1/items/:id', (req, res) =>{
+app.get('/v1/items/:id', (req, res) => {
   FoodNutrition
   .findById(req.params.id)
   .then(result => {
@@ -106,7 +106,6 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
   if ((req.params.id) !== req.body.id) {
     const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
     res.status(400).json({message: msg});
-
   }
 });
 
