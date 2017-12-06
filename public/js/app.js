@@ -25,17 +25,17 @@ const renderResults = function (store) {
               </tr>`;
   });
   //removed the .empty() that was immediately after result
-  $('#result').append(renderTable()).find('thead').append(listItems);
+  $('#result').empty().append(renderResultsTable()).find('thead').append(listItems);
   
   // $('#result').append('<ul>').find('ul').append(`<table>${listItems}</table>`);
 };
 
-const renderTable = function() {
+const renderResultsTable = function() {
   const columns = 
     `<thead>
       <tr>
         <th>Item Name</th>
-        <th>Calories</th>
+        <th>Total Calories</th>
     </thead>`;
   $('#result').append(columns);
 };
@@ -47,28 +47,114 @@ const renderEdit = function (store) {
   el.find('[name=content]').val(item.content);
 }; 
 
-const renderDetailTable = function(store) {
-  const columns = 
-  `<thead>
-    <tr>
-      <th>Item Name</th>
-    </tr>
-  `;
-  $('legend').append(columns);
-};
+// const renderDetailTable = function(store) {
+//   const item = store.item;
+//   const column = `
+//   <thead>
+//     <tr>
+//       <th>${item.name}</th>
+//     </tr>
+//   </thead>
+//   `;
+//   $('#details').append(column);
+// };
 
+// const renderDetail = function (store) {
+//   const el = $('#detail');
+//   const item = store.item;
+//   renderDetailTable();
+//   el.find('.name').text(item.name);
+//   el.find('.serve-size').text(item.servingSize);
+//   el.find('.fat').text(item.fat);
+//   el.find('.carbs').text(item.carbs);
+//   el.find('.protein').text(item.protein);
+//   el.find('.cal-count').text(item.totalCalories);
+// };
+
+// const createTable = function() {
+
+// }
+// not using
+//   const columns = 
+//   `<thead>
+//     <tr>
+//       <th>Item Name</th>
+//     </tr>
+//   `;
+//   $('legend').append(columns);
+// };
 
 const renderDetail = function (store) {
   const el = $('#detail');
   const item = store.item;
-  renderDetailTable();
-  el.find('.name').text(item.name);
-  el.find('.serve-size').text(item.servingSize);
-  el.find('.fat').text(item.fat);
-  el.find('.carbs').text(item.carbs);
-  el.find('.protein').text(item.protein);
-  el.find('.cal-count').text(item.totalCalories);
+  //not using 
+//   const details = `<tr id="${item.id}">Serving Size(g)
+//     <td>${item.servingSize}</td> 
+//  </tr>
+// <tr>Fat(g)
+//     <td>${item.fat}</td> 
+// </tr>
+// <tr>Carbs(g)
+//     <td>${item.carbs}</td> 
+// </tr>
+// <tr>Protein(g)
+//     <td>${item.protein}</td> 
+// </tr>
+// <tr>Total Calories
+//   <td>${item.totalCals}</td> 
+// </tr>
+// `;
+  //only using this table below
+  const detailTable = `<table class='tableDetailView'>
+  <thead>
+  <tr>
+  <th>${item.name}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>Serving Size</td>
+  <td>${item.servingSize}</td>
+  </tr>
+  <tr>
+  <td>Fat(g):</td> 
+  <td>${item.fat}</td>
+  </tr>
+  <tr>
+  <td>Carbs(g):</td>
+  <td>${item.carbs}</td> 
+  </tr>
+  <tr>
+  <td>Protein(g):</td> 
+  <td>${item.protein}</td>
+  </tr>
+  <tr>
+  <td>Total Calories:</td>
+  <td> ${item.totalCals}</td> 
+  </tr>
+  </tbody>
+</table>`;
+$('.nutritionTable').empty().append(detailTable);
 };
+
+  // el.append(renderDetailTable(store)).find('thead').append(details);
+=======
+  //not using
+//   renderDetailTable();
+//   el.find('.name').text(item.name);
+//   el.find('.serve-size').text(item.servingSize);
+//   el.find('.fat').text(item.fat);
+//   el.find('.carbs').text(item.carbs);
+//   el.find('.protein').text(item.protein);
+//   el.find('.cal-count').text(item.totalCalories);
+// };
+  // el.find('.name').text(item.name);
+  // el.find('.serve-size').text(item.servingSize);
+  // el.find('.fat').text(item.fat);
+  // el.find('.carbs').text(item.carbs);
+  // el.find('.protein').text(item.protein);
+  // el.find('.cal-count').text(item.totalCalories);
+// };
 
 const handleSearch = function (event) {
   event.preventDefault();
@@ -147,6 +233,7 @@ const handleDetails = function (event) {
     .then(response => {
       store.item = response;
       renderDetail(store);
+      // renderDetailTable(store);
 
       store.view = 'detail';
       renderPage(store);
