@@ -29,8 +29,13 @@ app.get('/v1/items', (req, res) => {
     });
 });
 
-app.get('/v1/items/:id', (req, res) =>{
-  res.json(data[req.params.id]);
+app.get('/v1/items/:id', jsonParser, (req, res) =>{
+  
+  FoodNutrition
+    .findById(req.params.id)
+    .then(item => {
+      res.status(200).json(item.apiRepr());
+    });
 });
 
 app.post('/v1/items', jsonParser, (req,res) => {
