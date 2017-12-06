@@ -21,6 +21,8 @@ describe('index page', function () {
     return runServer(TEST_DATABASE_URL);
   });
 
+  //add a beforeeach and aftereach
+
   after(function() {
     return closeServer();
   });  

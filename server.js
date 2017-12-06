@@ -6,25 +6,29 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
-const foodnutrition  = require('./db/models');
+const FoodNutrition  = require('./db/models');
 const data = require('./db/seed-data');
 
 mongoose.Promise = global.Promise;
 
 //__dirname???
+// app.use(express.static('public'));
+
 app.use(express.static('public'));
+
+
 app.use(bodyParser.json());
 
-app.get('/v1/items', (req, res) => {
-  foodnutrition
-  .find()
-  .then(result => {
-    res.json(result.map(item => item.apiRepr()));
-  })
+app.get('/v1/items', (req, res) => {  
+  FoodNutrition
+    .find({})
+    .then(items => {
+      res.status(200).json(items.map(item => item.apiRepr()));
+    });
 });
 
-app.get('/v1/items/:id', (req, res) =>{
-  foodnutrition
+app.get('/v1/items/:id', (req, res) => {
+  FoodNutrition
   .findById(req.params.id)
   .then(result => {
     res.json(result.apiRepr());
@@ -75,7 +79,7 @@ app.post('/v1/items', jsonParser, (req,res) => {
     
   }
 
-  foodnutrition
+  FoodNutrition
     .create({
       name: req.body.name,
       servingSize: req.body.servingSize,
@@ -91,12 +95,18 @@ app.post('/v1/items', jsonParser, (req,res) => {
  
 });
 
+app.delete('/v1/items/:id', (req, res) => {
+  FoodNutrition 
+    .findByIdAndRemove(req.params.id)
+    .then(res.status(204).end())
+    .catch(err => res.status(500).send('Something went wrong.'));
+});
+
 
 app.put('/v1/items/:id', jsonParser, (req,res) => {
   if ((req.params.id) !== req.body.id) {
     const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
     res.status(400).json({message: msg});
-
   }
 });
 
@@ -138,12 +148,6 @@ const closeServer = () => {
   });
 
 };
-
-// if (require.main === module) { 
-//   app.listen(process.env.PORT || 8080, function () { 
-//     console.info(`App listening on ${this.address().port}`); 
-//   }); 
-// }
 
 if (require.main === module) {
   runServer().catch(err => console.error(err));
