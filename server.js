@@ -8,15 +8,25 @@ const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
 const FoodNutrition  = require('./db/models');
 const data = require('./db/seed-data');
+const path = require('path');
 
 mongoose.Promise = global.Promise;
 
 //__dirname???
+// app.use(express.static('public'));
+
 app.use(express.static('public'));
+
+
 app.use(bodyParser.json());
 
-app.get('/v1/items', (req, res) =>{
-  res.json(data);
+app.get('/v1/items', (req, res) => {
+  
+  FoodNutrition
+    .find({})
+    .then(items => {
+      res.status(200).json(items.map(item => item.apiRepr()));
+    });
 });
 
 app.get('/v1/items/:id', (req, res) =>{
@@ -24,9 +34,7 @@ app.get('/v1/items/:id', (req, res) =>{
 });
 
 app.post('/v1/items', jsonParser, (req,res) => {
- //incoming input from user
-  //save to db here
-  console.log(req.body)
+
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   for (let i=0; i<requiredFields.length; i++) {
     const field = requiredFields[i];
