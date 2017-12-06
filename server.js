@@ -12,7 +12,11 @@ const data = require('./db/seed-data');
 mongoose.Promise = global.Promise;
 
 //__dirname???
+// app.use(express.static('public'));
+
 app.use(express.static('public'));
+
+
 app.use(bodyParser.json());
 
 // ===== GET =====
@@ -154,12 +158,6 @@ const closeServer = () => {
   });
 
 };
-
-// if (require.main === module) { 
-//   app.listen(process.env.PORT || 8080, function () { 
-//     console.info(`App listening on ${this.address().port}`); 
-//   }); 
-// }
 
 if (require.main === module) {
   runServer().catch(err => console.error(err));
