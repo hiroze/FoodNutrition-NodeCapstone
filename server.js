@@ -8,7 +8,6 @@ const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
 const FoodNutrition  = require('./db/models');
 const data = require('./db/seed-data');
-const path = require('path');
 
 mongoose.Promise = global.Promise;
 
