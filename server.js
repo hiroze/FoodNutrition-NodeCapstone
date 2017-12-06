@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
-const FoodNutrition  = require('./db/models');
+const foodnutrition  = require('./db/models');
 const data = require('./db/seed-data');
 
 mongoose.Promise = global.Promise;
@@ -15,20 +15,28 @@ mongoose.Promise = global.Promise;
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.get('/v1/items', (req, res) =>{
-  res.json(data);
+app.get('/v1/items', (req, res) => {
+  foodnutrition
+  .find()
+  .then(result => {
+    res.json(result.map(item => item.apiRepr()));
+  })
 });
 
 app.get('/v1/items/:id', (req, res) =>{
-  res.json(data[req.params.id]);
+  foodnutrition
+  .findById(req.params.id)
+  .then(result => {
+    res.json(result.apiRepr());
+  })
 });
 
-app.post('/v1/items', jsonParser, (req,res) => {
+app.post('/v1/items', (req,res) => {
  //incoming input from user
   //save to db here
-  console.log(req.body)
+  
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
-  for (let i=0; i<requiredFields.length; i++) {
+  for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
       let message = `Missing ${field} in request body`;
@@ -37,7 +45,7 @@ app.post('/v1/items', jsonParser, (req,res) => {
     }
   }
 
-  FoodNutrition
+  foodnutrition
     .create({
       name: req.body.name,
       servingSize: req.body.servingSize,
@@ -45,16 +53,22 @@ app.post('/v1/items', jsonParser, (req,res) => {
       carbs: req.body.carbs,
       protein: req.body.protein,
     })
-    .then(item => res.status(201).json(item.apiRepr()));
-
- 
+    .then(item => res.status(201).json(item.apiRepr()))
+    .catch(err => {
+      console.error(err);
+      res.status(400).send(err.message);
+    });
+    
 });
 
 
-// app.get('/', (req, res) => { 
-//   res.sendFile(__dirname + '/index.html');
-//   console.log(res+'test'); 
-// });
+app.put('/v1/items/:id', jsonParser, (req,res) => {
+  if ((req.params.id) !== req.body.id) {
+    const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
+    res.status(400).json({message: msg});
+
+  }
+});
 
 
 let server;

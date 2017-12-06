@@ -15,7 +15,6 @@ const nutritionSchema = new mongoose.Schema({
 
 ///have a method for the calculation
 
-
 nutritionSchema.virtual('totalCalories').get(function(){
   return (this.fat*9)+(this.carbs*4)+(this.protein*4);
 });
