@@ -19,35 +19,6 @@ const tearDownDb = () => {
   return mongoose.connection.dropDatabase();
 };
 
-// const seedData = function() {
-
-
-//   return FoodNutrition.insertMany(testData);
-// };
-
-// describe('index page', function () {
-
-//   before(function() {
-//     console.log('starting web server for tests...');
-//     return runServer(TEST_DATABASE_URL);
-//   });
-
-//   //add a beforeeach and aftereach
-
-//   after(function() {
-//     return closeServer();
-//   });  
-      
-//   it('should exist', function () {
-//     return chai.request(app)
-//       .get('/')
-//       .then(function (res) {
-//         res.should.have.status(200);
-//       });
-//   });
-// });
-
-
 describe('Food Item API Resource', function() {
   
   before(function() {
@@ -75,6 +46,20 @@ describe('Food Item API Resource', function() {
         .then(function(res) {
           res.should.have.status(200);
           res.should.have.header('content-type', 'text/html; charset=UTF-8');
+        });
+    });
+    it ('should return all items from the db', function() {
+      let item;
+      return chai.request(app)
+        .get('/v1/items')
+        .then(function(temp) {
+          item = temp;
+          item.should.have.status(200);
+          item.body.should.have.lengthOf.at.least(1);
+          return FoodNutrition.count();
+        })
+        .then(function(count) {
+          item.body.should.have.lengthOf(count);
         });
 
     });
