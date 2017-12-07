@@ -40,6 +40,12 @@ td > a {
   text-decoration: none;
 }
 
+/* .viewSearch,
+.viewAbout,
+.viewCreate {
+  outline: 1px solid transparent;
+  border: solid green;
+} */
 
 #search,
 #detail,

@@ -202,7 +202,6 @@ const handleUpdate = function (event) {
     fat: el.find('input[name=fat]').val(),
     carbs: el.find('input[name=carbs]').val(),
     protein: el.find('input[name=protein]').val()
-    // content: el.find('[name=content]').val()
   };
   api.update(document, store.token)
     .then(response => {
