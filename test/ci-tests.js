@@ -39,7 +39,7 @@ describe('Food Item API Resource', function() {
     return closeServer();
   });
   
-  describe('GET root endpoint', function(){ 
+  describe('GET endpoint', function(){ 
     it('should exist', function() {
       return chai.request(app)
         .get('/')
@@ -68,7 +68,6 @@ describe('Food Item API Resource', function() {
         .findOne()
         .then(function(_item){
           item = _item;
-          console.log(item);
           return chai.request(app).get(`/v1/items/${item.id}`);
         })
         .then(function(res) {
@@ -76,6 +75,44 @@ describe('Food Item API Resource', function() {
           res.should.have.status(200);
           item.id.should.equal(res.body.id);
         });
+    });
+    describe('POST endpoint', function() {
+      it('should create a new item', function() {
+        const newItem = {
+          name: 'foobarbizz',
+          servingSize: 2,
+          fat: 10,
+          carbs: 50,
+          protein: 11
+        };
+        const totalCals = newItem.fat*9+newItem.carbs*4+newItem.protein*4;
+        return chai.request(app)
+          .post('/v1/items/')
+          .send(newItem)
+          .then(function(res) {
+            res.should.have.status(201);
+            res.should.be.json;
+            res.body.should.be.a('object');
+            res.body.should.include.keys(
+              'id', 'name', 'servingSize', 'fat', 'carbs', 'protein', 'totalCals'
+            );
+            res.body.id.should.not.be.null;
+            res.body.name.should.equal(newItem.name);
+            return FoodNutrition.findById(res.body.id);
+          })
+          .then(function(item) {
+            //add property to db item for totalCals
+            item.totalCals = item.fat*9+item.carbs*4+item.protein*4;
+            console.log(item);
+            item.name.should.equal(newItem.name);
+            item.servingSize.should.equal(newItem.servingSize);
+            item.protein.should.equal(newItem.protein);
+            //check api representation
+            item.totalCals.should.equal(totalCals);
+          });
+      });
+
+
     });
 
 
