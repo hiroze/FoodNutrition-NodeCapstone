@@ -26,9 +26,9 @@ const renderResults = function (store) {
   });
   //removed the .empty() that was immediately after result
   $('#result').empty().append(renderResultsTable()).find('thead').append(listItems);
-  
-  // $('#result').append('<ul>').find('ul').append(`<table>${listItems}</table>`);
+    
 };
+
 
 const renderResultsTable = function() {
   const columns = 
@@ -43,117 +43,115 @@ const renderResultsTable = function() {
 const renderEdit = function (store) {
   const el = $('#edit');
   const item = store.item;
-  el.find('[name=title]').val(item.title);
-  el.find('[name=content]').val(item.content);
+  const editTable = `
+  <table class='tableEditView'>
+    <thead>
+      <tr>
+        <th>${item.name}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Serving Size</td>
+        <td>${item.servingSize}</td>
+      </tr>
+      <tr>
+        <td>Fat(g):</td> 
+        <td>${item.fat}</td>
+      </tr>
+      <tr>
+        <td>Carbs(g):</td>
+        <td>${item.carbs}</td> 
+      </tr>
+      <tr>    
+        <td>Protein(g):</td> 
+        <td>${item.protein}</td>
+      </tr>
+      <tr>
+        <td>Total Calories:</td>
+        <td> ${item.totalCals}</td> 
+      </tr>
+    </tbody>
+  </table>`;
+$('.nutritionTable').empty().append(editTable);
+
+  el.find('[name=name]').val(item.name);
+  el.find('[name=servingSize]').val(item.servingSize);
+  el.find('[name=fat]').val(item.fat);
+  el.find('[name=carbs]').val(item.name);
+  el.find('[name=protein]').val(item.protein);
 }; 
 
-// const renderDetailTable = function(store) {
-//   const item = store.item;
-//   const column = `
-//   <thead>
-//     <tr>
-//       <th>${item.name}</th>
-//     </tr>
-//   </thead>
-//   `;
-//   $('#details').append(column);
-// };
 
-// const renderDetail = function (store) {
-//   const el = $('#detail');
-//   const item = store.item;
-//   renderDetailTable();
-//   el.find('.name').text(item.name);
-//   el.find('.serve-size').text(item.servingSize);
-//   el.find('.fat').text(item.fat);
-//   el.find('.carbs').text(item.carbs);
-//   el.find('.protein').text(item.protein);
-//   el.find('.cal-count').text(item.totalCalories);
-// };
+const renderCreate = function (store) {
+  const el = $('#create');
+  const item = store.item;
+  const createTable = `			
+ <div class='container'>
+    <div>
+      <label for="name">Name</label>
+      <input type="text" name="name" placeholder=" e.g. Granny Smith Apple" required>
+    </div>
+    <div>
+      <label class="serv-size" for="servingSize">Serving Size</label>
+      <input type="text" name="servingSize" required>
+    </div>
+    <div>
+      <label for="fat">Fat (g)</label>
+      <input type="text" name="fat" required>
+    </div>
+    <div>
+      <label for="carbs">Carbs (g)</label>
+      <input type="text" name="carbs" required>
+    </div>
+    <div>
+      <label for="protein">Protein (g)</label>
+      <input type="text" name="protein" required>
+    </div>
 
-// const createTable = function() {
+      <button type="submit">Submit</button>
+ </div>  
+      `;
+$('#create').empty().append(createTable);
 
-// }
-// not using
-//   const columns = 
-//   `<thead>
-//     <tr>
-//       <th>Item Name</th>
-//     </tr>
-//   `;
-//   $('legend').append(columns);
-// };
+};
+ 
 
 const renderDetail = function (store) {
   const el = $('#detail');
   const item = store.item;
-  //not using 
-//   const details = `<tr id="${item.id}">Serving Size(g)
-//     <td>${item.servingSize}</td> 
-//  </tr>
-// <tr>Fat(g)
-//     <td>${item.fat}</td> 
-// </tr>
-// <tr>Carbs(g)
-//     <td>${item.carbs}</td> 
-// </tr>
-// <tr>Protein(g)
-//     <td>${item.protein}</td> 
-// </tr>
-// <tr>Total Calories
-//   <td>${item.totalCals}</td> 
-// </tr>
-// `;
-  //only using this table below
-  const detailTable = `<table class='tableDetailView'>
-  <thead>
-  <tr>
-  <th>${item.name}</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td>Serving Size</td>
-  <td>${item.servingSize}</td>
-  </tr>
-  <tr>
-  <td>Fat(g):</td> 
-  <td>${item.fat}</td>
-  </tr>
-  <tr>
-  <td>Carbs(g):</td>
-  <td>${item.carbs}</td> 
-  </tr>
-  <tr>
-  <td>Protein(g):</td> 
-  <td>${item.protein}</td>
-  </tr>
-  <tr>
-  <td>Total Calories:</td>
-  <td> ${item.totalCals}</td> 
-  </tr>
-  </tbody>
-</table>`;
+  const detailTable = `
+  <table class='tableDetailView'>
+    <thead>
+      <tr>
+        <th>${item.name}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Serving Size</td>
+        <td>${item.servingSize}</td>
+      </tr>
+      <tr>
+        <td>Fat(g):</td> 
+        <td>${item.fat}</td>
+      </tr>
+      <tr>
+        <td>Carbs(g):</td>
+        <td>${item.carbs}</td> 
+      </tr>
+      <tr>    
+        <td>Protein(g):</td> 
+        <td>${item.protein}</td>
+      </tr>
+      <tr>
+        <td>Total Calories:</td>
+        <td> ${item.totalCals}</td> 
+      </tr>
+    </tbody>
+  </table>`;
 $('.nutritionTable').empty().append(detailTable);
 };
-
-  // el.append(renderDetailTable(store)).find('thead').append(details);
-  //not using
-//   renderDetailTable();
-//   el.find('.name').text(item.name);
-//   el.find('.serve-size').text(item.servingSize);
-//   el.find('.fat').text(item.fat);
-//   el.find('.carbs').text(item.carbs);
-//   el.find('.protein').text(item.protein);
-//   el.find('.cal-count').text(item.totalCalories);
-// };
-  // el.find('.name').text(item.name);
-  // el.find('.serve-size').text(item.servingSize);
-  // el.find('.fat').text(item.fat);
-  // el.find('.carbs').text(item.carbs);
-  // el.find('.protein').text(item.protein);
-  // el.find('.cal-count').text(item.totalCalories);
-// };
 
 const handleSearch = function (event) {
   event.preventDefault();
@@ -171,7 +169,6 @@ const handleSearch = function (event) {
       store.list = response;
       // renderTable(store);
       renderResults(store);
-
       store.view = 'search';
       renderPage(store);
     }).catch(err => {
@@ -183,10 +180,12 @@ const handleCreate = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-
   const document = {
-    title: el.find('[name=title]').val(),
-    content: el.find('[name=content]').val()
+    name: el.find('[name=name]').val(), //name is name of input
+    servingSize: el.find('[name=servingSize]').val(),
+    fat: el.find('[name=fat]').val(),
+    carbs: el.find('[name=carbs]').val(),
+    protein: el.find('[name=protein]').val()    
   };
   api.create(document)
     .then(response => {
@@ -207,13 +206,16 @@ const handleUpdate = function (event) {
 
   const document = {
     id: store.item.id,
-    title: el.find('[name=title]').val(),
-    content: el.find('[name=content]').val()
+    name: el.find('[name=name]').val(),
+    servingSize: el.find('[name=servingSize]').val(),
+    fat: el.find('[name=fat]').val(),
+    carbs: el.find('[name=carbs]').val(),
+    protein: el.find('[name=protein]').val()  
   };
-  api.update(document, store.token)
+  api.update(document)
     .then(response => {
       store.item = response;
-      store.list = null; //invalidate cached list results
+      store.list = null; 
       renderDetail(store);
       store.view = 'detail';
       renderPage(store);
@@ -258,6 +260,7 @@ const handleRemove = function (event) {
 const handleViewCreate = function (event) {
   event.preventDefault();
   const store = event.data;
+  renderCreate(store);
   store.view = 'create';
   renderPage(store);
 };
@@ -274,7 +277,7 @@ const handleViewList = function (event) {
 const handleViewEdit = function (event) {
   event.preventDefault();
   const store = event.data;
-  renderEdit(store);
+  renderDetail(store);
 
   store.view = 'edit';
   renderPage(store);
