@@ -8,17 +8,18 @@ This web applicaiton lets users enter macronutrient (fat, carbs, protein) inform
 ### Demo the App
 Click on this link to see the application in action.
 
-### Future Additions
+### Future Features/Additions
 - we'd like to add a user database so user's can access their entries quickly
 - a search and sort filter
 - working out a good way to handle serving size
 
-
 ## Getting Started   
-If you like the premise and want to add features or play with it outside the live version, these instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+If you like the premise and want to play with a local copy or possibly add features, these instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites  
-Modules and fun things you need
+First you need to [fork](https://help.github.com/articles/fork-a-repo/) a copy of the repo.
+
+Next, you'll need some fun tools (modules).
 ```
 node
 npm
@@ -30,8 +31,7 @@ mongoose
 ### Installation  
 Install Node and npm    
 
-If you're a developer, chances are you have node and npm installed, but if not, you can get system specific information on how to install them [here](https://www.npmjs.com/get-npm).  You can find instructions to install most of what is needed at this site as well.
-
+If you're a developer, chances are you have node and npm installed, but if not, you can get system specific information on how to install them [here](https://www.npmjs.com/get-npm).  You can find instructions to install most of what is needed for this project at this site as well.
 
 Install Express  
 ```
@@ -48,8 +48,8 @@ Install mongoose
 $ npm install mongoose
 ```
 
-
-## Running the tests
+## Testing
+### Running the tests
 Explain how to run the automated tests for this system
 
 ### Break down into end to end tests
