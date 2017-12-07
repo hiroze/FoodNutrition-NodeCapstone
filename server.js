@@ -53,35 +53,29 @@ app.post('/v1/items', jsonParser, (req,res) => {
       return res.status(400).send(msg);
 
     }
-    // if (req.body.servingSize == undefined) {
-    //   return res.status(400).json({message: 'serving size required'});
-    // }
 
     if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
       const msg = 'Serving size cannot be empty or negative.';
-      return res.status(400).send(msg);
+      return res.status(400).send({message: msg});
     }
 
-    // if (req.body.fat == undefined) {
-    //   return res.status(400).json({message: 'fat required'});
-    // }
     if (req.body.fat < 0 || req.body.fat === null || req.body.fat === emptyStr ) {
       const msg = 'Fat cannot be empty or negative.';
-      return res.status(400).send(msg);
+      return res.status(400).send({message: msg});
     }
     if (req.body.carbs < 0 || req.body.carbs === null || req.body.carbs === emptyStr ) {
       const msg = 'Carbs cannot be empty or negative.';
-      return res.status(400).send(msg);
+      return res.status(400).send({message: msg});
     }
     if (req.body.protein < 0 || req.body.protein === null || req.body.protein === emptyStr ) {
       const msg = 'Protein cannot be empty or negative.';
-      return res.status(400).send(msg);
+      return res.status(400).send({message: msg});
     }
 
     if (!(field in req.body)) {
       let message = `Missing ${field} in request body`;
       console.error(message);
-      return res.status(400).send(message);
+      return res.status(400).send({message: message});
     }
     
   }
