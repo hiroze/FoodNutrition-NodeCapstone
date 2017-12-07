@@ -61,11 +61,11 @@ Give an example
 
 ## Deployment
 
-
 ## Contributing
 
 ## Authors
-
+Kayla R. Webb
+Firoz Kamdar
 
 ## License
 
