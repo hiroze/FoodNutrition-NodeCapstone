@@ -22,24 +22,22 @@ app.use(bodyParser.json());
 // ===== GET =====
 app.get('/v1/items', (req, res) => {
   FoodNutrition
-  .find()
-  .then(result => {
-    res.json(result.map(item => item.apiRepr()));
-  })
+    .find()
+    .then(result => {
+      res.json(result.map(item => item.apiRepr()));
+    })
 });
 // ===== GET by ID =====
 app.get('/v1/items/:id', (req, res) =>{
   FoodNutrition
-  .findById(req.params.id)
-  .then(result => {
-    res.json(result.apiRepr());
-  })
+    .findById(req.params.id)
+    .then(result => {
+      res.json(result.apiRepr());
+    });
 });
 // ===== POST =====
 app.post('/v1/items', jsonParser, (req,res) => {
-  //incoming input from user
-  //save to db here
-  //db validation error persists
+
   const emptyStr = "";
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   for (let i = 0; i < requiredFields.length; i++) {
@@ -109,14 +107,14 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
     if (item in req.body) {
       edited[item] = req.body[item];
     }
-  })
-  FoodNutrition
-  .findByIdAndUpdate(req.params.id, {$set: edited}, {new: true})
-  .then(editedItem => res.status(204).end())
-  .catch(err => { 
-    console.log(err); 
-    res.status(500).send({error:'Internal server error'}); 
   });
+  FoodNutrition
+    .findByIdAndUpdate(req.params.id, {$set: edited}, {new: true})
+    .then(editedItem => res.status(204).end())
+    .catch(err => { 
+      console.log(err); 
+      res.status(500).send({error:'Internal server error'}); 
+    });
 
 });
 

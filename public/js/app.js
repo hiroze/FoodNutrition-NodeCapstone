@@ -13,6 +13,27 @@ const renderPage = function (store) {
   }
 };
 
+const renderAbout = function() {
+  const aboutText =  `		<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium 
+  voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, 
+  similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. 
+  Et harum quidem rerum facilis est et expedita distinctio. 
+  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
+  omnis voluptas assumenda est, omnis dolor repellendus. 
+  Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. 
+  Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+<p>Et harum quidem rerum facilis est et expedita distinctio. 
+  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
+  omnis voluptas assumenda est, omnis dolor repellendus. 
+  Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. </p>
+<p>Founding Contributors:</p>
+<ul>
+  <li>Kayla R. Webb</li>
+  <li>Firoz Kamdar</li>
+</ul>`;
+  $('#about').find('h2').empty().append(aboutText);
+};
+
 
 const renderResults = function (store) {
   const listItems = store.list.map((item) => {
@@ -24,10 +45,7 @@ const renderResults = function (store) {
                 <td>${item.totalCals}</td>
               </tr>`;
   });
-  //removed the .empty() that was immediately after result
   $('#result').empty().append(renderResultsTable()).find('thead').append(listItems);
-  
-  // $('#result').append('<ul>').find('ul').append(`<table>${listItems}</table>`);
 };
 
 const renderResultsTable = function() {
@@ -43,133 +61,103 @@ const renderResultsTable = function() {
 const renderEdit = function (store) {
   const el = $('#edit');
   const item = store.item;
-  el.find('[name=title]').val(item.title);
-  el.find('[name=content]').val(item.content);
+  el.find('[name=name]').val(item.name);
+  el.find('[name=servingsize]').val(item.servingSize);
 }; 
 
-// const renderDetailTable = function(store) {
-//   const item = store.item;
-//   const column = `
-//   <thead>
-//     <tr>
-//       <th>${item.name}</th>
-//     </tr>
-//   </thead>
-//   `;
-//   $('#details').append(column);
-// };
-
-// const renderDetail = function (store) {
-//   const el = $('#detail');
-//   const item = store.item;
-//   renderDetailTable();
-//   el.find('.name').text(item.name);
-//   el.find('.serve-size').text(item.servingSize);
-//   el.find('.fat').text(item.fat);
-//   el.find('.carbs').text(item.carbs);
-//   el.find('.protein').text(item.protein);
-//   el.find('.cal-count').text(item.totalCalories);
-// };
-
-// const createTable = function() {
-
-// }
-// not using
-//   const columns = 
-//   `<thead>
-//     <tr>
-//       <th>Item Name</th>
-//     </tr>
-//   `;
-//   $('legend').append(columns);
-// };
-
-const renderDetail = function (store) {
-  const el = $('#detail');
+const editTable = function(store) {
   const item = store.item;
-  //not using 
-//   const details = `<tr id="${item.id}">Serving Size(g)
-//     <td>${item.servingSize}</td> 
-//  </tr>
-// <tr>Fat(g)
-//     <td>${item.fat}</td> 
-// </tr>
-// <tr>Carbs(g)
-//     <td>${item.carbs}</td> 
-// </tr>
-// <tr>Protein(g)
-//     <td>${item.protein}</td> 
-// </tr>
-// <tr>Total Calories
-//   <td>${item.totalCals}</td> 
-// </tr>
-// `;
-  //only using this table below
-  const detailTable = `<table class='tableDetailView'>
+  
+  const table = 
+  `<table class='tableDetailView'>
   <thead>
-  <tr>
-  <th>${item.name}</th>
-  </tr>
+    <tr>
+      <th contenteditable='true'><label for="name">${item.name}</label>
+      </th>
+    </tr>
   </thead>
   <tbody>
-  <tr>
-  <td>Serving Size</td>
-  <td>${item.servingSize}</td>
-  </tr>
-  <tr>
-  <td>Fat(g):</td> 
-  <td>${item.fat}</td>
-  </tr>
-  <tr>
-  <td>Carbs(g):</td>
-  <td>${item.carbs}</td> 
-  </tr>
-  <tr>
-  <td>Protein(g):</td> 
-  <td>${item.protein}</td>
-  </tr>
-  <tr>
-  <td>Total Calories:</td>
-  <td> ${item.totalCals}</td> 
-  </tr>
-  </tbody>
+    <tr>
+      <td id='servingSize'><label for="servingsize">
+      Serving Size</label></td>
+      <td contenteditable='true'>${item.servingSize}</td>
+    </tr>
+    <tr>
+      <td id='fat'><label for="fat">Fat(g):</label></td> 
+      <td contenteditable='true'>${item.fat}</td>
+    </tr>
+     <tr>
+      <td id='carbs'><label for="carbs">Carbs(g):</label></td>
+      <td contenteditable='true'>${item.carbs}</td> 
+      </tr>
+      <tr>
+        <td id='protein'><label for="protein">Protein(g):</label></td> 
+        <td contenteditable='true'>${item.protein}</td>
+      </tr>
+      <tr>
+        <td id='cals'><label for="cals">
+        Total Calories:</label></td>
+        <td> ${item.totalCals}</td> 
+      </tr>
+    </tbody>
 </table>`;
-$('.nutritionTable').empty().append(detailTable);
+  $('.nutritionEdit').empty().append(table);
+  
 };
 
-  // el.append(renderDetailTable(store)).find('thead').append(details);
-  //not using
-//   renderDetailTable();
-//   el.find('.name').text(item.name);
-//   el.find('.serve-size').text(item.servingSize);
-//   el.find('.fat').text(item.fat);
-//   el.find('.carbs').text(item.carbs);
-//   el.find('.protein').text(item.protein);
-//   el.find('.cal-count').text(item.totalCalories);
-// };
-  // el.find('.name').text(item.name);
-  // el.find('.serve-size').text(item.servingSize);
-  // el.find('.fat').text(item.fat);
-  // el.find('.carbs').text(item.carbs);
-  // el.find('.protein').text(item.protein);
-  // el.find('.cal-count').text(item.totalCalories);
-// };
+const renderDetail = function (store) {
+  const item = store.item;
+
+  const detailTable = 
+    `<table class='tableDetailView'>
+        <thead>
+          <tr>
+            <th><label for="name">${item.name}</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id='servingSize'><label for="servingsize">
+            Serving Size</label></td>
+            <td>${item.servingSize}</td>
+          </tr>
+          <tr>
+            <td id='fat'><label for="fat">Fat(g):</label></td> 
+            <td>${item.fat}</td>
+          </tr>
+           <tr>
+            <td id='carbs'><label for="carbs">Carbs(g):</label></td>
+            <td>${item.carbs}</td> 
+            </tr>
+            <tr>
+              <td id='protein'><label for="protein">Protein(g):</label></td> 
+              <td>${item.protein}</td>
+            </tr>
+            <tr>
+              <td id='cals'><label for="cals">
+              Total Calories:</label></td>
+              <td> ${item.totalCals}</td> 
+            </tr>
+          </tbody>
+    </table>`;
+  $('.nutritionTable').empty().append(detailTable);
+};
+
 
 const handleSearch = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-  const title = el.find('[name=title]').val();
+  // const title = el.find('[name=title]').val();
   var query;
-  if (title) {
+  if (name) {
     query = {
-      title: el.find('[name=title]').val()
+      name: el.find('[name=title]').val()
     };
   }
   api.search(query)
     .then(response => {
       store.list = response;
-      // renderTable(store);
       renderResults(store);
 
       store.view = 'search';
@@ -200,16 +188,40 @@ const handleCreate = function (event) {
     });
 };
 
+// const handleUpdate = function (event) {
+//   event.preventDefault();
+//   const store = event.data;
+//   const el = $(event.target);
+
+//   const document = {
+//     id: store.item.id,
+//     title: el.find('[name=title]').val(),
+//     content: el.find('[name=content]').val()
+//   };
+//   api.update(document, store.token)
+//     .then(response => {
+//       store.item = response;
+//       store.list = null; //invalidate cached list results
+//       renderDetail(store);
+//       store.view = 'detail';
+//       renderPage(store);
+//     }).catch(err => {
+//       console.error(err);
+//     });
+// };
+
 const handleUpdate = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
 
-  const document = {
-    id: store.item.id,
-    title: el.find('[name=title]').val(),
-    content: el.find('[name=content]').val()
-  };
+  // const document = {
+  //   id: store.item.id,
+  //   name: el.find('th').val(),
+  //   servingSize: el.find('td').val(),
+  //   fat: el.find
+  //   content: el.find('[name=content]').val()
+  // };
   api.update(document, store.token)
     .then(response => {
       store.item = response;
@@ -226,13 +238,12 @@ const handleDetails = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-  // was li and changed to tr
   const id = el.closest('tr').attr('id');
+
   api.details(id)
     .then(response => {
       store.item = response;
       renderDetail(store);
-      // renderDetailTable(store);
 
       store.view = 'detail';
       renderPage(store);
@@ -255,6 +266,15 @@ const handleRemove = function (event) {
       console.error(err);
     });
 };
+
+const handleViewAbout = function(event) {
+  event.preventDefault();
+  const store = event.data;
+  store.view = 'about';
+  renderAbout();
+  renderPage(store);
+};
+
 const handleViewCreate = function (event) {
   event.preventDefault();
   const store = event.data;
@@ -275,6 +295,7 @@ const handleViewEdit = function (event) {
   event.preventDefault();
   const store = event.data;
   renderEdit(store);
+  editTable(store);
 
   store.view = 'edit';
   renderPage(store);
@@ -292,6 +313,7 @@ jQuery(function ($) {
   };
 
   $('#create').on('submit', STORE, handleCreate);
+  $('#about').on('submit', STORE, handleViewAbout);
   $('#search').on('submit', STORE, handleSearch);
   $('#edit').on('submit', STORE, handleUpdate);
 
@@ -300,6 +322,7 @@ jQuery(function ($) {
   $('#detail').on('click', '.edit', STORE, handleViewEdit);
 
   $(document).on('click', '.viewCreate', STORE, handleViewCreate);
+  $(document).on('click', 'viewAbout', STORE, handleViewAbout);
   $(document).on('click', '.viewList', STORE, handleViewList);
 
   // start app by triggering a search
