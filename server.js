@@ -11,8 +11,6 @@ const data = require('./db/seed-data');
 
 mongoose.Promise = global.Promise;
 
-// app.use(express.static('public'));
-
 app.use(express.static('public'));
 
 

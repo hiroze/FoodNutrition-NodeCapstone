@@ -58,12 +58,12 @@ const renderResultsTable = function() {
   $('#result').append(columns);
 };
 
-const renderEdit = function (store) {
-  const el = $('#edit');
-  const item = store.item;
-  el.find('[name=name]').val(item.name);
-  el.find('[name=servingsize]').val(item.servingSize);
-}; 
+// const renderEdit = function (store) {
+//   const el = $('#edit');
+//   const item = store.item;
+//   el.find('[name=name]').val(item.name);
+//   el.find('[name=servingsize]').val(item.servingSize);
+// }; 
 
 const editTable = function(store) {
   const item = store.item;
@@ -105,6 +105,39 @@ const editTable = function(store) {
 </form>`;
   $('.nutritionEdit').empty().append(table);
   
+};
+
+const renderCreate = function (store) {
+  const el = $('#create');
+  const item = store.item;
+  const createTable = `            
+<div class='container'>
+    <div>
+      <label for="name">Name</label>
+      <input type="text" name="name" placeholder=" e.g. Granny Smith Apple" required>
+    </div>
+    <div>
+      <label class="serv-size" for="servingSize">Serving Size</label>
+      <input type="text" name="servingSize" required>
+    </div>
+    <div>
+      <label for="fat">Fat (g)</label>
+      <input type="text" name="fat" required>
+    </div>
+    <div>
+      <label for="carbs">Carbs (g)</label>
+      <input type="text" name="carbs" required>
+    </div>
+    <div>
+      <label for="protein">Protein (g)</label>
+      <input type="text" name="protein" required>
+    </div>
+
+     <button type="submit">Submit</button>
+ </div>  
+     `;
+$('#create').empty().append(createTable);
+
 };
 
 const renderDetail = function (store) {
@@ -279,7 +312,7 @@ const handleViewList = function (event) {
 const handleViewEdit = function (event) {
   event.preventDefault();
   const store = event.data;
-  renderEdit(store);
+  // renderEdit(store);
   editTable(store);
 
   store.view = 'edit';
