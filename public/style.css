@@ -1,21 +1,41 @@
 * {
   box-sizing: border-box;
   font-family: sans-serif; 
+  /* border: solid red 1px; */
 }
+
 
 body {
   width: 960px;
-  height: 900px
+  height: 900px;
+  
 }
 
+.container {
+  height: 400px;
+  width: 550px;
+  margin-left: 0;
+  padding: 0px;
+  text-align:center;
+  border: solid red 1px;
+}
 
 form, section {
   margin-top: 10px;
 }
+
 label {
-  display: block;
-  display:inline-block;
-  width: 80px;
+  height: 20px;
+  width: 150px;
+  margin-top: 20px;
+  text-align: right;
+  float:left;
+}
+
+input {
+  height: 20px;
+  width: 300px;
+  margin-top: 20px;
 }
 
 button, input[type=submit] {
@@ -30,6 +50,10 @@ button {
   margin-left: 20px;
   margin-top: 20px;
   background-color: rgb(11, 182, 235);
+}
+
+button:hover {
+  background-color: lightgreen;
 }
 
 #nav li {

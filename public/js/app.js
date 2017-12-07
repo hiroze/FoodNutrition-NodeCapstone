@@ -47,6 +47,7 @@ const renderResults = function (store) {
   $('#result').empty().append(renderResultsTable()).find('thead').append(listItems);
 };
 
+
 const renderResultsTable = function() {
   const columns = 
     `<thead>
@@ -160,7 +161,6 @@ const handleSearch = function (event) {
     .then(response => {
       store.list = response;
       renderResults(store);
-
       store.view = 'search';
       renderPage(store);
     }).catch(err => {
@@ -172,10 +172,12 @@ const handleCreate = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-
   const document = {
-    title: el.find('[name=title]').val(),
-    content: el.find('[name=content]').val()
+    name: el.find('[name=name]').val(), //name is name of input
+    servingSize: el.find('[name=servingSize]').val(),
+    fat: el.find('[name=fat]').val(),
+    carbs: el.find('[name=carbs]').val(),
+    protein: el.find('[name=protein]').val()    
   };
   api.create(document)
     .then(response => {
@@ -203,10 +205,10 @@ const handleUpdate = function (event) {
     carbs: el.find('input[name=carbs]').val(),
     protein: el.find('input[name=protein]').val()
   };
-  api.update(document, store.token)
+  api.update(document)
     .then(response => {
       store.item = response;
-      store.list = null; //invalidate cached list results
+      store.list = null; 
       renderDetail(store);
       store.view = 'detail';
       renderPage(store);
@@ -260,6 +262,7 @@ const handleViewAbout = function(event) {
 const handleViewCreate = function (event) {
   event.preventDefault();
   const store = event.data;
+  renderCreate(store);
   store.view = 'create';
   renderPage(store);
 };

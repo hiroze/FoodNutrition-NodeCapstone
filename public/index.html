@@ -62,10 +62,23 @@
 				<label for="name">Content</label>
 				<textarea rows="4" cols="50" name="content"></textarea>
 			</div>
+				<a href="" class="edit">Edit</a>
+				<a href="" class="remove">Remove</a>
+			</fieldset>
+			<a href="" class="viewList">&lt; Back to list results </a>
+		</section>
 
-			<button type="submit">Submit</button>
-		</fieldset>
-	</form>
+		<form id="create" class="view">
+			<!-- <fieldset> -->
+				<!-- <legend>Contribute</legend> -->
+				<!-- <div>
+					<label for="name">Title</label>
+					<input type="text" name="title">
+				</div>
+				<div>
+					<label for="name">Content</label>
+					<textarea rows="4" cols="50" name="content"></textarea>
+				</div> -->
 
 	<form id="edit" class="view">
 		<fieldset>
@@ -76,6 +89,21 @@
 		</fieldset>
 	</form>
 
+		<form id="edit" class="view">
+			<fieldset>
+				<legend>Edit</legend>
+				<div>
+					<label for="name">Name</label>
+					<input type="text" name="name">
+				</div>
+				<div>
+					<label for="name">Serving Size</label>
+					<textarea rows="4" cols="50" name="servingSize"></textarea>
+				</div>
+				<button type="submit">Submit</button>
+			</fieldset>
+		</form>
+	</div>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="js/fetch.js"></script>
 	<script src="js/app.js"></script>
