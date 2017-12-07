@@ -118,19 +118,19 @@ const renderCreate = function (store) {
     </div>
     <div>
       <label class="serv-size" for="servingSize">Serving Size</label>
-      <input type="text" name="servingSize" required>
+      <input type="number" name="servingSize" min="1" required>
     </div>
     <div>
       <label for="fat">Fat (g)</label>
-      <input type="text" name="fat" required>
+      <input type="number" name="fat" min="0" required>
     </div>
     <div>
       <label for="carbs">Carbs (g)</label>
-      <input type="text" name="carbs" required>
+      <input type="number" name="carbs" min="0" required>
     </div>
     <div>
       <label for="protein">Protein (g)</label>
-      <input type="text" name="protein" required>
+      <input type="number" name="protein" min="0" required>
     </div>
 
      <button type="submit">Submit</button>
@@ -139,6 +139,14 @@ const renderCreate = function (store) {
 $('#create').empty().append(createTable);
 
 };
+
+// function validateForm(){
+//   if (document.servingSize < 0) {
+//     alert("Serving Size cannot be a negative number.")
+//     return false;
+//   }
+//   console.log(document.servingSize);
+// };
 
 const renderDetail = function (store) {
   const item = store.item;
@@ -205,6 +213,8 @@ const handleCreate = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
+  
+  
   const document = {
     name: el.find('[name=name]').val(), //name is name of input
     servingSize: el.find('[name=servingSize]').val(),
@@ -219,7 +229,8 @@ const handleCreate = function (event) {
       renderDetail(store);
       store.view = 'detail';
       renderPage(store);
-    }).catch(err => {
+    })
+    .catch(err => {
       console.error(err);
     });
 };

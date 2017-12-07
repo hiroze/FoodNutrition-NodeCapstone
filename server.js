@@ -51,12 +51,12 @@ app.post('/v1/items', jsonParser, (req,res) => {
     if (Number(req.body.name)) {
       const msg = 'Name must contain letters';
       return res.status(400).send(msg);
-
-    }
+}
 
     if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
       const msg = 'Serving size cannot be empty or negative.';
-      return res.status(400).send({message: msg});
+      return res.status(400).send({error: msg});
+      
     }
 
     if (req.body.fat < 0 || req.body.fat === null || req.body.fat === emptyStr ) {
