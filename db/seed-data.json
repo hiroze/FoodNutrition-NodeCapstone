@@ -1,39 +1,82 @@
-[
-    
-            {
-                "id": 0,
-                "name": "Wild Rice",
-                "servingSize": 1,
-                "fat": 10,
-                "carbs": 30,
-                "protein": 25,
-                "totalCalories": 300
-            },
-            {
-                "id": 1,
-                "name": "Apple",
-                "servingSize": 1,
-                "fat": 10,
-                "carbs": 25,
-                "protein": 15,
-                "totalCalories": 200
-            },
-            {
-                "id": 2,
-                "name": "Potato",
-                "servingSize": 1,
-                "fat": 10,
-                "carbs": 25,
-                "protein": 15,
-                "totalCalories": 200
-            },
-            {
-                "id": 3,
-                "name": "Turkey",
-                "servingSize": 1,
-                "fat": 10,
-                "carbs": 25,
-                "protein": 15,
-                "totalCalories": 200
-            }
+[ 
+    {
+      "name": "Pie",
+      "servingSize": 1,
+      "fat": 15,
+      "carbs": 10,
+      "protein": 8
+    },
+  
+{
+        "name": "Hot Dog",
+        "servingSize": 1,
+        "fat": 15,
+        "carbs": 10,
+        "protein": 8
+},
+
+    {
+        "name": "Cake",
+        "servingSize": 1,
+        "fat": 15,
+        "carbs": 10,
+        "protein": 8
+    },
+
+    {
+        "name": "Chocolate Bar",
+        "servingSize": 1,
+        "fat": 15,
+        "carbs": 10,
+        "protein": 8
+    },
+
+    {
+        "name": "Butter",
+        "servingSize": 1,
+        "fat": 15,
+        "carbs": 10,
+        "protein": 8
+    },
+
+    {
+        "name": "Pancakes",
+        "servingSize": 1,
+        "fat": 15,
+        "carbs": 10,
+        "protein": 8
+     },
+
+    {
+      "name": "Brown Rice",
+      "servingSize": 1,
+      "fat": 10,
+      "carbs": 35,
+      "protein": 15
+    },
+
+    {
+      "name": "White Rice",
+      "servingSize": 1,
+      "fat": 10,
+      "carbs": 35,
+      "protein": 15
+    },
+
+    {
+      "name": "Sweet Potato",
+      "servingSize": 1,
+      "fat": 10,
+      "carbs": 35,
+      "protein": 15
+    },
+
+    {
+      "name": "Lentils",
+      "servingSize": 1,
+      "fat": 10,
+      "carbs": 35,
+      "protein": 15
+    }
+  
 ]
