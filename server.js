@@ -11,7 +11,6 @@ const data = require('./db/seed-data');
 
 mongoose.Promise = global.Promise;
 
-//__dirname???
 // app.use(express.static('public'));
 
 app.use(express.static('public'));
@@ -37,7 +36,6 @@ app.get('/v1/items/:id', (req, res) =>{
 });
 // ===== POST =====
 app.post('/v1/items', jsonParser, (req,res) => {
-  console.log('firing');
   //incoming input from user
   //save to db here
   //db validation error persists

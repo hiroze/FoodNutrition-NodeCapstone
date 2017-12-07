@@ -88,30 +88,34 @@ const renderCreate = function (store) {
   const el = $('#create');
   const item = store.item;
   const createTable = `			
+<div class='container'>
     <div>
       <label for="name">Name</label>
-      <input type="text" name="name">
+      <input type="text" name="name" placeholder=" e.g. Granny Smith Apple" required>
     </div>
     <div>
-      <label for="servingSize">Serving Size</label>
-      <input type="text" name="servingSize">
+      <label class="serv-size" for="servingSize">Serving Size</label>
+      <input type="text" name="servingSize" required>
     </div>
     <div>
-      <label for="fat">Fat</label>
-      <input type="text" name="fat">
+      <label for="fat">Fat (g)</label>
+      <input type="text" name="fat" required>
     </div>
     <div>
-      <label for="carbs">Carbs</label>
-      <input type="text" name="carbs">
+      <label for="carbs">Carbs (g)</label>
+      <input type="text" name="carbs" required>
     </div>
     <div>
-      <label for="protein">Protein</label>
-      <input type="text" name="protein">
+      <label for="protein">Protein (g)</label>
+      <input type="text" name="protein" required>
     </div>
 
-      <button type="submit">Submit</button>`;
+      <button type="submit">Submit</button>
+</div>  
+      `;
 
 $('#create').empty().append(createTable);
+
 };
  
 
@@ -185,7 +189,6 @@ const handleSearch = function (event) {
       store.list = response;
       // renderTable(store);
       renderResults(store);
-
       store.view = 'search';
       renderPage(store);
     }).catch(err => {
@@ -197,7 +200,6 @@ const handleCreate = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-  console.log('hello');
   const document = {
     name: el.find('[name=name]').val(), //name is name of input
     servingSize: el.find('[name=servingSize]').val(),
