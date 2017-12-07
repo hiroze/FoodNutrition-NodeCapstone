@@ -26,9 +26,9 @@ const renderResults = function (store) {
   });
   //removed the .empty() that was immediately after result
   $('#result').empty().append(renderResultsTable()).find('thead').append(listItems);
-  
-  // $('#result').append('<ul>').find('ul').append(`<table>${listItems}</table>`);
+    
 };
+
 
 const renderResultsTable = function() {
   const columns = 
@@ -83,6 +83,25 @@ const renderEdit = function (store) {
 //   `;
 //   $('legend').append(columns);
 // };
+
+const renderCreate = function (store) {
+  const el = $('#create');
+  const item = store.item;
+
+  const createTable = `			<div>
+  <label for="name">Name</label>
+  <input type="text" name="name">
+</div>
+<div>
+<label for="servingSize">Serving Size</label>
+<input type="text" name="servingSize">
+</div>
+<button type="submit">Submit</button>
+`;
+$('#create').empty().append(createTable);
+};
+ 
+
 
 const renderDetail = function (store) {
   const el = $('#detail');
@@ -183,10 +202,11 @@ const handleCreate = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-
+  console.log('hello');
   const document = {
-    title: el.find('[name=title]').val(),
-    content: el.find('[name=content]').val()
+    name: el.find('[name=name]').val(), //name is name of input
+    servingSize: el.find('[name=servingSize]').val(),
+    
   };
   api.create(document)
     .then(response => {
@@ -258,6 +278,7 @@ const handleRemove = function (event) {
 const handleViewCreate = function (event) {
   event.preventDefault();
   const store = event.data;
+  renderCreate(store);
   store.view = 'create';
   renderPage(store);
 };

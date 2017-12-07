@@ -37,6 +37,7 @@ app.get('/v1/items/:id', (req, res) =>{
 });
 // ===== POST =====
 app.post('/v1/items', jsonParser, (req,res) => {
+  console.log('firing');
   //incoming input from user
   //save to db here
   //db validation error persists
@@ -44,6 +45,9 @@ app.post('/v1/items', jsonParser, (req,res) => {
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
+    // if (req.body.name == undefined) {
+    //   return res.status(400).json({message: 'name required'});
+    // }
 
     if (req.body.name.length === 0) {
       const msg = 'Name cannot be empty';
@@ -55,9 +59,17 @@ app.post('/v1/items', jsonParser, (req,res) => {
       return res.status(400).send(msg);
 
     }
+    // if (req.body.servingSize == undefined) {
+    //   return res.status(400).json({message: 'serving size required'});
+    // }
+
     if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
       const msg = 'Serving size cannot be empty or negative.';
       return res.status(400).send(msg);
+    }
+
+    if (req.body.fat == undefined) {
+      return res.status(400).json({message: 'fat required'});
     }
     if (req.body.fat < 0 || req.body.fat === null || req.body.fat === emptyStr ) {
       const msg = 'Fat cannot be empty or negative.';
