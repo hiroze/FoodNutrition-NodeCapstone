@@ -8,7 +8,7 @@ This web applicaiton lets users enter macronutrient (fat, carbs, protein) inform
 ### Demo the App
 Click on this link to see the application in action.
 
-### Future Features/Additions
+### Planned Features
 - we'd like to add a user database so user's can access their entries quickly
 - a search and sort filter
 - working out a good way to handle serving size
@@ -64,10 +64,8 @@ Give an example
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-
 ## Authors
+
 
 ## License
 
