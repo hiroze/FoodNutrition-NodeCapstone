@@ -73,7 +73,8 @@ const editTable = function(store) {
   <table class='tableDetailView' id='${item.id}'>
   <thead>
     <tr>
-      <th><label for="name"> <input name='name' type='text' value='${item.name}'></label>
+      <th><label for="name"> <input name='name' type='text' pattern="^(?![0-9]*$)[a-zA-Z0-9!#$%^&*()+=,.?_'’ ]+$" 
+      title="All number entries not allowed." value='${item.name}'</label>
       </th>
     </tr>
   </thead>
@@ -81,19 +82,19 @@ const editTable = function(store) {
     <tr>
       <td id='servingSize'>
       <label for="servingsize">Serving Size</label></td>
-      <td><input name='servingsize' type='text' value='${item.servingSize}'</td>
+      <td><input name='servingsize' type='number' min="1" value='${item.servingSize}'</td>
     </tr>
     <tr>
       <td id='fat'><label for="fat">Fat(g):</label></td> 
-      <td><input name='fat' type='text' value='${item.fat}'</td>
+      <td><input name='fat' type='number' min="1" value='${item.fat}'</td>
     </tr>
      <tr>
       <td id='carbs'><label for="carbs">Carbs(g):</label></td>
-      <td><input name='carbs' type='text' value='${item.carbs}'</td> 
+      <td><input name='carbs' type='number' min="1" value='${item.carbs}'</td> 
       </tr>
       <tr>
         <td id='protein'><label for="protein">Protein(g):</label></td> 
-        <td><input name='protein' type='text' value='${item.protein}'</td>
+        <td><input name='protein' type='number' min="1" value='${item.protein}'</td>
       </tr>
       <tr>
         <td id='cals'><label for="cals">
@@ -102,6 +103,7 @@ const editTable = function(store) {
       </tr>
     </tbody>
 </table>
+    <button type="submit">Submit Edit</button>
 </form>`;
   $('.nutritionEdit').empty().append(table);
   
@@ -114,8 +116,9 @@ const renderCreate = function (store) {
 <div class='container'>
     <div>
       <label for="name">Name</label>
-      <input type="text" name="name" placeholder=" e.g. Granny Smith Apple" required>
-    </div>
+      <input type="text" name="name" pattern="^(?![0-9]*$)[a-zA-Z0-9!#$%^&*()+=,.?_'’ ]+$" 
+      title="All number entries not allowed." placeholder=" e.g. Granny Smith Apple" required>               
+      </div>
     <div>
       <label class="serv-size" for="servingSize">Serving Size</label>
       <input type="number" name="servingSize" min="1" required>
@@ -132,21 +135,13 @@ const renderCreate = function (store) {
       <label for="protein">Protein (g)</label>
       <input type="number" name="protein" min="0" required>
     </div>
-
-     <button type="submit">Submit</button>
+<button type="submit">Submit</button>
  </div>  
      `;
 $('#create').empty().append(createTable);
 
 };
 
-// function validateForm(){
-//   if (document.servingSize < 0) {
-//     alert("Serving Size cannot be a negative number.")
-//     return false;
-//   }
-//   console.log(document.servingSize);
-// };
 
 const renderDetail = function (store) {
   const item = store.item;
