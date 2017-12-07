@@ -64,7 +64,7 @@ Give an example
 ## Contributing
 
 ## Authors
-Kayla R. Webb
+Kayla R. Webb  
 Firoz Kamdar
 
 ## License
