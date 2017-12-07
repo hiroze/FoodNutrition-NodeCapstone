@@ -147,7 +147,7 @@ app.delete('/v1/items/:id', (req, res) => {
 
 let server;
 
-const runServer = (db = DATABASE_URL, PORT = 8080) =>
+const runServer = (db = DATABASE_URL, port=PORT) =>
 {
   return new Promise((resolve, reject) => {
     mongoose.connect(db, { useMongoClient: true }, err => {
@@ -155,7 +155,7 @@ const runServer = (db = DATABASE_URL, PORT = 8080) =>
         return reject(err);
       }
       server = app
-        .listen(PORT, () => {
+        .listen(port, () => {
           console.log(`Your app is listening on port ${PORT}`);
           resolve();
         })
