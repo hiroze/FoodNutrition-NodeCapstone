@@ -97,10 +97,16 @@ app.post('/v1/items', jsonParser, (req,res) => {
 // ===== PUT =====
 app.put('/v1/items/:id', jsonParser, (req,res) => {
 //checks if id and body match
+  const emptyStr = "";
   if ((req.params.id) !== req.body.id) {
     const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
     res.status(400).json({message: msg});
   }
+  if (req.body.name === emptyStr) {
+    res.status(400).send('Name cannot be empty');
+  }
+  //add validation for null
+
   const edited = {};
   const editableItems = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   editableItems.forEach(function(item) {
@@ -110,7 +116,9 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
   });
   FoodNutrition
     .findByIdAndUpdate(req.params.id, {$set: edited}, {new: true})
-    .then(editedItem => res.status(204).end())
+    //send back updated data  with a json object
+    //updated to ok status
+    .then(editedItem => res.status(200).json(editedItem.apiRepr()))
     .catch(err => { 
       console.log(err); 
       res.status(500).send({error:'Internal server error'}); 

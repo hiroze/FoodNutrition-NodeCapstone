@@ -69,7 +69,7 @@ const editTable = function(store) {
   const item = store.item;
   
   const table = 
-  `<table class='tableDetailView'>
+  `<table class='tableDetailView' id='${item.id}'>
   <thead>
     <tr>
       <th contenteditable='true'><label for="name">${item.name}</label>
@@ -215,13 +215,15 @@ const handleUpdate = function (event) {
   const store = event.data;
   const el = $(event.target);
 
-  // const document = {
-  //   id: store.item.id,
-  //   name: el.find('th').val(),
-  //   servingSize: el.find('td').val(),
-  //   fat: el.find
-  //   content: el.find('[name=content]').val()
-  // };
+  const document = {
+    id: store.item.id,
+    name: el.find('label[for=name]').find('td').val(),
+    servingSize: el.find('label[for=servingSize]').find('td').val(),
+    fat: el.find('label[for=fat]').val(),
+    carbs: el.find('label[for=carbs]').find('td').val(),
+    protein: el.find('label[for=protein]').val()
+    // content: el.find('[name=content]').val()
+  };
   api.update(document, store.token)
     .then(response => {
       store.item = response;
