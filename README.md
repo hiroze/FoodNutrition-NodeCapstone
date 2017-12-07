@@ -6,7 +6,7 @@
 This web applicaiton lets users enter macronutrient (fat, carbs, protein) information about foods where this information is not readily available. A user can add these basic fields, submit it and instantly see it in the database with a total calorie count.  
 
 ### Demo the App
-Click on this link to see the application in action.
+Click on this [link](https://immense-lowlands-79625.herokuapp.com) to see the application in action.
 
 ### Planned Features
 - we'd like to add a user database so user's can access their entries quickly
