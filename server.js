@@ -97,6 +97,7 @@ app.post('/v1/items', jsonParser, (req,res) => {
 // ===== PUT =====
 app.put('/v1/items/:id', jsonParser, (req,res) => {
 //checks if id and body match
+console.log(req.body)
   const emptyStr = "";
   if ((req.params.id) !== req.body.id) {
     const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
@@ -105,7 +106,7 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
   if (req.body.name === emptyStr) {
     res.status(400).send('Name cannot be empty');
   }
-  //add validation for null
+  //add validation for null and negative numbers
 
   const edited = {};
   const editableItems = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
@@ -113,6 +114,8 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
     if (item in req.body) {
       edited[item] = req.body[item];
     }
+    console.log(edited);
+    
   });
   FoodNutrition
     .findByIdAndUpdate(req.params.id, {$set: edited}, {new: true})

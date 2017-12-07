@@ -13,31 +13,30 @@ const renderPage = function (store) {
   }
 };
 
-const renderAbout = function() {
-  const aboutText =  `		<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium 
-  voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, 
-  similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. 
-  Et harum quidem rerum facilis est et expedita distinctio. 
-  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
-  omnis voluptas assumenda est, omnis dolor repellendus. 
-  Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. 
-  Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-<p>Et harum quidem rerum facilis est et expedita distinctio. 
-  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
-  omnis voluptas assumenda est, omnis dolor repellendus. 
-  Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. </p>
-<p>Founding Contributors:</p>
-<ul>
-  <li>Kayla R. Webb</li>
-  <li>Firoz Kamdar</li>
-</ul>`;
-  $('#about').find('h2').empty().append(aboutText);
-};
+// const renderAbout = function() {
+//   const aboutText =  `<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium 
+//   voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, 
+//   similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. 
+//   Et harum quidem rerum facilis est et expedita distinctio. 
+//   Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
+//   omnis voluptas assumenda est, omnis dolor repellendus. 
+//   Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. 
+//   Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+// <p>Et harum quidem rerum facilis est et expedita distinctio. 
+//   Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
+//   omnis voluptas assumenda est, omnis dolor repellendus. 
+//   Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. </p>
+// <p>Founding Contributors:</p>
+// <ul>
+//   <li>Kayla R. Webb</li>
+//   <li>Firoz Kamdar</li>
+// </ul>`;
+//   $('#about').append(aboutText);
+// };
 
 
 const renderResults = function (store) {
   const listItems = store.list.map((item) => {
-    console.log(item);
     return `<tr id="${item.id}">
                 <td>
                 <a href="${item.id}" class="detail">${item.name}</a>
@@ -69,30 +68,31 @@ const editTable = function(store) {
   const item = store.item;
   
   const table = 
-  `<table class='tableDetailView' id='${item.id}'>
+  `<form>
+  <table class='tableDetailView' id='${item.id}'>
   <thead>
     <tr>
-      <th contenteditable='true'><label for="name">${item.name}</label>
+      <th><label for="name"> <input name='name' type='text' value='${item.name}'></label>
       </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td id='servingSize'><label for="servingsize">
-      Serving Size</label></td>
-      <td contenteditable='true'>${item.servingSize}</td>
+      <td id='servingSize'>
+      <label for="servingsize">Serving Size</label></td>
+      <td><input name='servingsize' type='text' value='${item.servingSize}'</td>
     </tr>
     <tr>
       <td id='fat'><label for="fat">Fat(g):</label></td> 
-      <td contenteditable='true'>${item.fat}</td>
+      <td><input name='fat' type='text' value='${item.fat}'</td>
     </tr>
      <tr>
       <td id='carbs'><label for="carbs">Carbs(g):</label></td>
-      <td contenteditable='true'>${item.carbs}</td> 
+      <td><input name='carbs' type='text' value='${item.carbs}'</td> 
       </tr>
       <tr>
         <td id='protein'><label for="protein">Protein(g):</label></td> 
-        <td contenteditable='true'>${item.protein}</td>
+        <td><input name='protein' type='text' value='${item.protein}'</td>
       </tr>
       <tr>
         <td id='cals'><label for="cals">
@@ -100,7 +100,8 @@ const editTable = function(store) {
         <td> ${item.totalCals}</td> 
       </tr>
     </tbody>
-</table>`;
+</table>
+</form>`;
   $('.nutritionEdit').empty().append(table);
   
 };
@@ -188,27 +189,6 @@ const handleCreate = function (event) {
     });
 };
 
-// const handleUpdate = function (event) {
-//   event.preventDefault();
-//   const store = event.data;
-//   const el = $(event.target);
-
-//   const document = {
-//     id: store.item.id,
-//     title: el.find('[name=title]').val(),
-//     content: el.find('[name=content]').val()
-//   };
-//   api.update(document, store.token)
-//     .then(response => {
-//       store.item = response;
-//       store.list = null; //invalidate cached list results
-//       renderDetail(store);
-//       store.view = 'detail';
-//       renderPage(store);
-//     }).catch(err => {
-//       console.error(err);
-//     });
-// };
 
 const handleUpdate = function (event) {
   event.preventDefault();
@@ -217,11 +197,11 @@ const handleUpdate = function (event) {
 
   const document = {
     id: store.item.id,
-    name: el.find('label[for=name]').find('td').val(),
-    servingSize: el.find('label[for=servingSize]').find('td').val(),
-    fat: el.find('label[for=fat]').val(),
-    carbs: el.find('label[for=carbs]').find('td').val(),
-    protein: el.find('label[for=protein]').val()
+    name: el.find('input[name=name]').val(),
+    servingSize: el.find('input[name=servingsize]').val(),
+    fat: el.find('input[name=fat]').val(),
+    carbs: el.find('input[name=carbs]').val(),
+    protein: el.find('input[name=protein]').val()
     // content: el.find('[name=content]').val()
   };
   api.update(document, store.token)
@@ -271,9 +251,10 @@ const handleRemove = function (event) {
 
 const handleViewAbout = function(event) {
   event.preventDefault();
+  console.log(event.data)
   const store = event.data;
   store.view = 'about';
-  renderAbout();
+  // renderAbout();
   renderPage(store);
 };
 
@@ -315,7 +296,6 @@ jQuery(function ($) {
   };
 
   $('#create').on('submit', STORE, handleCreate);
-  $('#about').on('submit', STORE, handleViewAbout);
   $('#search').on('submit', STORE, handleSearch);
   $('#edit').on('submit', STORE, handleUpdate);
 
@@ -324,7 +304,7 @@ jQuery(function ($) {
   $('#detail').on('click', '.edit', STORE, handleViewEdit);
 
   $(document).on('click', '.viewCreate', STORE, handleViewCreate);
-  $(document).on('click', 'viewAbout', STORE, handleViewAbout);
+  $(document).on('click', '.viewAbout', STORE, handleViewAbout);
   $(document).on('click', '.viewList', STORE, handleViewList);
 
   // start app by triggering a search
