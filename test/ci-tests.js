@@ -61,8 +61,23 @@ describe('Food Item API Resource', function() {
         .then(function(count) {
           item.body.should.have.lengthOf(count);
         });
-
     });
+    it('should return a single item by id', function() {
+      let item;
+      return FoodNutrition
+        .findOne()
+        .then(function(_item){
+          item = _item;
+          console.log(item);
+          return chai.request(app).get(`/v1/items/${item.id}`);
+        })
+        .then(function(res) {
+          // console.log(res);
+          res.should.have.status(200);
+          item.id.should.equal(res.body.id);
+        });
+    });
+
 
   });
 
