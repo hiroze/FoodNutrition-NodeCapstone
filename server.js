@@ -68,9 +68,9 @@ app.post('/v1/items', jsonParser, (req,res) => {
       return res.status(400).send(msg);
     }
 
-    if (req.body.fat == undefined) {
-      return res.status(400).json({message: 'fat required'});
-    }
+    // if (req.body.fat == undefined) {
+    //   return res.status(400).json({message: 'fat required'});
+    // }
     if (req.body.fat < 0 || req.body.fat === null || req.body.fat === emptyStr ) {
       const msg = 'Fat cannot be empty or negative.';
       return res.status(400).send(msg);

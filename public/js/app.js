@@ -87,17 +87,30 @@ const renderEdit = function (store) {
 const renderCreate = function (store) {
   const el = $('#create');
   const item = store.item;
+  const createTable = `			
+    <div>
+      <label for="name">Name</label>
+      <input type="text" name="name">
+    </div>
+    <div>
+      <label for="servingSize">Serving Size</label>
+      <input type="text" name="servingSize">
+    </div>
+    <div>
+      <label for="fat">Fat</label>
+      <input type="text" name="fat">
+    </div>
+    <div>
+      <label for="carbs">Carbs</label>
+      <input type="text" name="carbs">
+    </div>
+    <div>
+      <label for="protein">Protein</label>
+      <input type="text" name="protein">
+    </div>
 
-  const createTable = `			<div>
-  <label for="name">Name</label>
-  <input type="text" name="name">
-</div>
-<div>
-<label for="servingSize">Serving Size</label>
-<input type="text" name="servingSize">
-</div>
-<button type="submit">Submit</button>
-`;
+      <button type="submit">Submit</button>`;
+
 $('#create').empty().append(createTable);
 };
  
@@ -106,24 +119,6 @@ $('#create').empty().append(createTable);
 const renderDetail = function (store) {
   const el = $('#detail');
   const item = store.item;
-  //not using 
-//   const details = `<tr id="${item.id}">Serving Size(g)
-//     <td>${item.servingSize}</td> 
-//  </tr>
-// <tr>Fat(g)
-//     <td>${item.fat}</td> 
-// </tr>
-// <tr>Carbs(g)
-//     <td>${item.carbs}</td> 
-// </tr>
-// <tr>Protein(g)
-//     <td>${item.protein}</td> 
-// </tr>
-// <tr>Total Calories
-//   <td>${item.totalCals}</td> 
-// </tr>
-// `;
-  //only using this table below
   const detailTable = `<table class='tableDetailView'>
   <thead>
   <tr>
@@ -206,7 +201,9 @@ const handleCreate = function (event) {
   const document = {
     name: el.find('[name=name]').val(), //name is name of input
     servingSize: el.find('[name=servingSize]').val(),
-    
+    fat: el.find('[name=fat]').val(),
+    carbs: el.find('[name=carbs]').val(),
+    protein: el.find('[name=protein]').val()    
   };
   api.create(document)
     .then(response => {
