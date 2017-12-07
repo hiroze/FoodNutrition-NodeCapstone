@@ -103,13 +103,52 @@ describe('Food Item API Resource', function() {
           .then(function(item) {
             //add property to db item for totalCals
             item.totalCals = item.fat*9+item.carbs*4+item.protein*4;
-            console.log(item);
             item.name.should.equal(newItem.name);
             item.servingSize.should.equal(newItem.servingSize);
             item.protein.should.equal(newItem.protein);
             //check api representation
             item.totalCals.should.equal(totalCals);
           });
+      });
+      describe('PUT endpoint', function() {
+        it('should update fields you send over', function() {
+          const editData = {
+            name: 'BizzBang',
+            protein: 100
+          };
+          return FoodNutrition
+            .findOne()
+            .then(function(item) {
+              editData.id = item.id;
+
+              return chai.request(app)
+                .put(`/v1/items/${editData.id}`)
+                .send(editData);
+            })
+            .then(function(item) {
+              item.body.name.should.equal(editData.name);
+              item.body.protein.should.equal(editData.protein);
+            });
+        });
+        describe('DELETE endpoint', function() {
+          it('should delete an item by id', function() {
+            let item;
+            FoodNutrition
+              .findOne()
+              .then(function(_item) {
+                item = _item;
+                return chai.request(app).delete(`/v1/items/${item.id}`);
+              })
+              .then(function(res){
+                res.should.have.status(204);
+                return FoodNutrition.findById(item.id);
+              })
+              .then(function(_item) {
+                should.not.exist(_item);
+              });
+          });
+        });
+
       });
 
 
