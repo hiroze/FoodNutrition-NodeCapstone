@@ -5,8 +5,17 @@
 # Crowd Sourced Nutrition App  
 This web applicaiton lets users enter macronutrient (fat, carbs, protein) information about foods where this information is not readily available. A user can add these basic fields, submit it and instantly see it in the database with a total calorie count.  
 
+### Demo the App
+Click on this link to see the application in action.
+
+### Future Additions
+- we'd like to add a user database so user's can access their entries quickly
+- a search and sort filter
+- working out a good way to handle serving size
+
+
 ## Getting Started   
-If you like the basic premise and want to add features or play with it outside the live version, these instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+If you like the premise and want to add features or play with it outside the live version, these instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites  
 Modules and fun things you need
@@ -20,7 +29,9 @@ mongoose
 
 ### Installation  
 Install Node and npm    
-If you're a developer, chances are you have node and npm installed, but you can get a reminder of the 'how to' [here](https://www.npmjs.com/get-npm).  You can find instructions to install most of what is needed at this site as well.
+
+If you're a developer, chances are you have node and npm installed, but if not, you can get system specific information on how to install them [here](https://www.npmjs.com/get-npm).  You can find instructions to install most of what is needed at this site as well.
+
 
 Install Express  
 ```
