@@ -33,4 +33,4 @@ nutritionSchema.methods.apiRepr = function() {
 //creates collection from the model
 const FoodNutrition = mongoose.model('FoodNutrition', nutritionSchema);
 
-module.exports =  FoodNutrition;
+module.exports = FoodNutrition;
