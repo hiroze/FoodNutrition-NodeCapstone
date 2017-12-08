@@ -12,8 +12,6 @@ const data = require('./db/seed-data');
 mongoose.Promise = global.Promise;
 
 app.use(express.static('public'));
-
-
 app.use(bodyParser.json());
 
 // ===== GET =====
@@ -24,6 +22,7 @@ app.get('/v1/items', (req, res) => {
       res.json(result.map(item => item.apiRepr()));
     })
 });
+
 // ===== GET by ID =====
 app.get('/v1/items/:id', (req, res) =>{
   FoodNutrition
@@ -32,6 +31,7 @@ app.get('/v1/items/:id', (req, res) =>{
       res.json(result.apiRepr());
     });
 });
+
 // ===== POST =====
 app.post('/v1/items', jsonParser, (req,res) => {
 
@@ -51,14 +51,12 @@ app.post('/v1/items', jsonParser, (req,res) => {
     if (Number(req.body.name)) {
       const msg = 'Name must contain letters';
       return res.status(400).send(msg);
-}
+    } 
 
     if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
       const msg = 'Serving size cannot be empty or negative.';
       return res.status(400).send({error: msg});
-      
     }
-
     if (req.body.fat < 0 || req.body.fat === null || req.body.fat === emptyStr ) {
       const msg = 'Fat cannot be empty or negative.';
       return res.status(400).send({message: msg});
@@ -77,9 +75,7 @@ app.post('/v1/items', jsonParser, (req,res) => {
       console.error(message);
       return res.status(400).send({message: message});
     }
-    
   }
-
   FoodNutrition
     .create({
       name: req.body.name,
@@ -93,13 +89,11 @@ app.post('/v1/items', jsonParser, (req,res) => {
       console.log(err); 
       res.status(500).send({error:'Internal server error'}); 
     });
- 
 });
 
 // ===== PUT =====
 app.put('/v1/items/:id', jsonParser, (req,res) => {
-//checks if id and body match
-console.log(req.body)
+  //checks if id and body match
   const emptyStr = "";
   if ((req.params.id) !== req.body.id) {
     const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
@@ -109,7 +103,6 @@ console.log(req.body)
     res.status(400).send('Name cannot be empty');
   }
   //add validation for null and negative numbers
-
   const edited = {};
   const editableItems = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   editableItems.forEach(function(item) {
@@ -117,7 +110,6 @@ console.log(req.body)
       edited[item] = req.body[item];
     }
     console.log(edited);
-    
   });
   FoodNutrition
     .findByIdAndUpdate(req.params.id, {$set: edited}, {new: true})
@@ -128,9 +120,9 @@ console.log(req.body)
       console.log(err); 
       res.status(500).send({error:'Internal server error'}); 
     });
-
 });
 
+// ===== DELETE =====
 app.delete('/v1/items/:id', (req, res) => {
   FoodNutrition 
     .findByIdAndRemove(req.params.id)

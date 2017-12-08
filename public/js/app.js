@@ -59,8 +59,8 @@ const renderResultsTable = function() {
 
 const editTable = function(store) {
   const item = store.item;
-  const table = 
-  `<form>
+  const table = `
+<form>
   <table class='tableDetailView' id='${item.id}'>
   <thead>
     <tr>
@@ -93,14 +93,15 @@ const editTable = function(store) {
         <td> ${item.totalCals}</td> 
       </tr>
     </tbody>
-</table>
-<button type="submit" name="edit-button">Submit Edit</button>
-</form>`;
+  </table>
+    <button type="submit" name="edit-button">Submit Edit</button>
+ </form>`;
   $('.nutritionEdit').empty().append(table);
 };
 
 
-const renderCreate = function (store) {
+
+const renderCreate = function (store) {  
   const el = $('#create');
   const item = store.item;
   const createTable = `            
@@ -230,7 +231,7 @@ const handleUpdate = function (event) {
     carbs: el.find('input[name=carbs]').val(),
     protein: el.find('input[name=protein]').val()
   };
-  api.update(document)
+  api.update(document, store.token)
     .then(response => {
       store.item = response;
       store.list = null; 
@@ -241,6 +242,7 @@ const handleUpdate = function (event) {
       console.error(err);
     });
 };
+
 
 const handleDetails = function (event) {
   event.preventDefault();
@@ -299,7 +301,7 @@ const handleViewList = function (event) {
 const handleViewEdit = function (event) {
   event.preventDefault();
   const store = event.data;
-  // renderEdit(store);
+  //renderEdit(store);
   editTable(store);
   store.view = 'edit';
   renderPage(store);
@@ -318,7 +320,7 @@ jQuery(function ($) {
 
   $('#create').on('submit', STORE, handleCreate);
   $('#search').on('submit', STORE, handleSearch);
-  $('#edit').on('submit', 'edit-button', STORE, handleUpdate);
+  $('#edit').on('submit',  STORE, handleUpdate);
 
   $('#result').on('click', '.detail', STORE, handleDetails);
   $('#detail').on('click', '.remove', STORE, handleRemove);
@@ -327,7 +329,7 @@ jQuery(function ($) {
   $(document).on('click', '.viewCreate', STORE, handleViewCreate);
   $(document).on('click', '.viewAbout', STORE, handleViewAbout);
   $(document).on('click', '.viewList', STORE, handleViewList);
-
+  //$(document).on('submit', '#edit-button',  STORE, handleUpdate);
   // start app by triggering a search
   $('#search').trigger('submit');
 
