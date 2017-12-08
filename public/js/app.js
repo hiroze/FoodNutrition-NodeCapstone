@@ -191,8 +191,14 @@ const handleSort = function(event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
+  const items = store.list;
+  console.log(items.totalCals);
+  const desc = items.sort(function(a, b){
+    return b.totalCals - a.totalCals;
+  });
+  console.log(desc);
 
-  console.log(store.list);
+
  console.log('working?');
 
   renderDetail(store);
