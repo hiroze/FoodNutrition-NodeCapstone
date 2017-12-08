@@ -15,7 +15,9 @@ const nutritionSchema = new mongoose.Schema({
 
 
 nutritionSchema.virtual('totalCalories').get(function(){
-  return (this.fat*9*this.servingSize)+(this.carbs*4*this.servingSize)+(this.protein*4*this.servingSize);
+  return ((this.fat*9*(this.servingSize))+
+  (this.carbs*4*(this.servingSize))+
+  (this.protein*4*(this.servingSize))).toFixed(2);
 });
 
 nutritionSchema.methods.apiRepr = function() {

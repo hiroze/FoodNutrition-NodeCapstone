@@ -184,8 +184,6 @@ const handleSort = function(event) {
         console.error(err);
       });
   }
-  
-  
 };
 
 
