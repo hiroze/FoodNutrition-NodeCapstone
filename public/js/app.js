@@ -54,19 +54,19 @@ const editTable = function(store) {
     <tr>
       <td id='servingSize'>
       <label for="servingsize">Serving Size</label></td>
-      <td><input name='servingsize' type='number' min="1" value='${item.servingSize}'</td>
+      <td><input name='servingsize' type='number' step="0.01" min="0.05" value='${item.servingSize}'</td>
     </tr>
     <tr>
       <td id='fat'><label for="fat">Fat(g):</label></td> 
-      <td><input name='fat' type='number' min="0" value='${item.fat}'</td>
+      <td><input name='fat' type='number' step="0.01" min="0" value='${item.fat}'</td>
     </tr>
      <tr>
       <td id='carbs'><label for="carbs">Carbs(g):</label></td>
-      <td><input name='carbs' type='number' min="0" value='${item.carbs}'</td> 
+      <td><input name='carbs' type='number' step="0.01" min="0" value='${item.carbs}'</td> 
       </tr>
       <tr>
         <td id='protein'><label for="protein">Protein(g):</label></td> 
-        <td><input name='protein' type='number' min="0" value='${item.protein}'</td>
+        <td><input name='protein' type='number' step="0.01" min="0" value='${item.protein}'</td>
       </tr>
       <tr>
         <td id='cals'><label for="cals">
@@ -92,19 +92,19 @@ const renderCreate = function (store) {
       </div>
       <div>
         <label class="serv-size" for="servingSize">Serving Size</label>
-        <input name="servingSize" type="text" required>
+        <input name="servingSize" step="0.01" min="0.05" type="text" required>
       </div>
       <div>
         <label for="fat">Fat (g)</label>
-        <input name="fat" type='number' min="0" required>
+        <input name="fat" type='number' step="0.01" min="0" required>
       </div>
       <div>
         <label for="carbs">Carbs (g)</label>
-        <input name="carbs" type='number' min="0" required>
+        <input name="carbs" type='number' step="0.01" min="0" required>
       </div>
       <div>
         <label for="protein">Protein (g)</label>
-        <input name="protein" type='number' min="0" required>
+        <input name="protein" type='number' step="0.01" min="0" required>
       </div>
     <button type="submit">Submit</button>
   </div> 
