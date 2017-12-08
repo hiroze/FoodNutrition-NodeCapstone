@@ -137,7 +137,7 @@ const renderCreate = function (store) {
      <button type="submit">Submit</button>
  </div>  
      `;
-$('#create').empty().append(createTable);
+  $('#create').empty().append(createTable);
 
 };
 
@@ -192,26 +192,35 @@ const handleSort = function(event) {
   const store = event.data;
   const el = $(event.target);
   const items = store.list;
-  console.log(items.totalCals);
-  const desc = items.sort(function(a, b){
-    return b.totalCals - a.totalCals;
-  });
-  renderResults(store);
-  renderPage(store);
+  let desc;
   
+  let query = {
+    sort: desc
+  };
+  api.search(query)
+    .then(response => console.log('hello', api, response));
+
+  // const desc = items.sort(function(a, b){
+
+  //   return b.totalCals - a.totalCals;
+  // });
+  // renderResults(store);
+  // renderPage(store);
+
+  // const toggle = items.sort(function(a, b){
+  //   if (desc) {
+  //     return a.totalCals - b.totalCals;      
+  //   }
+  // });
 };
+
 
 const handleSearch = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-  // const title = el.find('[name=title]').val();
   var query;
-  if (name) {
-    query = {
-      name: el.find('[name=title]').val()
-    };
-  }
+
   api.search(query)
     .then(response => {
       store.list = response;

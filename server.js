@@ -22,8 +22,20 @@ app.get('/v1/items', (req, res) => {
     .find()
     .then(result => {
       res.json(result.map(item => item.apiRepr()));
-    })
+    });
 });
+
+app.get('/v1/items/sort', (req, res) => {
+  FoodNutrition
+    .find()
+    .then(result => 
+      result.map(item => item.apiRepr()))
+    .then(items => items.sort(function(a,b) {
+      return b.totalCals - a.totalCals;
+    }))
+    .then(results => res.status(200).json(results));
+});
+
 // ===== GET by ID =====
 app.get('/v1/items/:id', (req, res) =>{
   FoodNutrition
@@ -35,7 +47,7 @@ app.get('/v1/items/:id', (req, res) =>{
 // ===== POST =====
 app.post('/v1/items', jsonParser, (req,res) => {
 
-  const emptyStr = "";
+  const emptyStr = '';
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
@@ -51,7 +63,7 @@ app.post('/v1/items', jsonParser, (req,res) => {
     if (Number(req.body.name)) {
       const msg = 'Name must contain letters';
       return res.status(400).send(msg);
-}
+    }
 
     if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
       const msg = 'Serving size cannot be empty or negative.';
@@ -99,8 +111,8 @@ app.post('/v1/items', jsonParser, (req,res) => {
 // ===== PUT =====
 app.put('/v1/items/:id', jsonParser, (req,res) => {
 //checks if id and body match
-console.log(req.body)
-  const emptyStr = "";
+  console.log(req.body);
+  const emptyStr = '';
   if ((req.params.id) !== req.body.id) {
     const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
     res.status(400).json({message: msg});
