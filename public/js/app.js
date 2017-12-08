@@ -47,7 +47,6 @@ const renderResults = function (store) {
   $('#result').empty().append(renderResultsTable()).find('thead').append(listItems);
 };
 
-
 const renderResultsTable = function() {
   const columns = 
     `<thead>
@@ -58,16 +57,8 @@ const renderResultsTable = function() {
   $('#result').append(columns);
 };
 
-// const renderEdit = function (store) {
-//   const el = $('#edit');
-//   const item = store.item;
-//   el.find('[name=name]').val(item.name);
-//   el.find('[name=servingsize]').val(item.servingSize);
-// }; 
-
 const editTable = function(store) {
   const item = store.item;
-  
   const table = 
   `<form>
   <table class='tableDetailView' id='${item.id}'>
@@ -103,17 +94,17 @@ const editTable = function(store) {
       </tr>
     </tbody>
 </table>
-    <button type="submit">Submit Edit</button>
+<button type="submit" name="edit-button">Submit Edit</button>
 </form>`;
   $('.nutritionEdit').empty().append(table);
-  
 };
+
 
 const renderCreate = function (store) {
   const el = $('#create');
   const item = store.item;
   const createTable = `            
-<div class='container'>
+ <div class='container'>
     <div>
       <label for="name">Name</label>
       <input type="text" name="name" pattern="^(?![0-9]*$)[a-zA-Z0-9!#$%^&*()+=,.?_'’ ]+$" 
@@ -135,11 +126,10 @@ const renderCreate = function (store) {
       <label for="protein">Protein (g)</label>
       <input type="number" name="protein" min="0" required>
     </div>
-<button type="submit">Submit</button>
+    <button type="submit" name="create-button">Submit</button>
  </div>  
      `;
 $('#create').empty().append(createTable);
-
 };
 
 
@@ -208,8 +198,6 @@ const handleCreate = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-  
-  
   const document = {
     name: el.find('[name=name]').val(), //name is name of input
     servingSize: el.find('[name=servingSize]').val(),
@@ -230,12 +218,10 @@ const handleCreate = function (event) {
     });
 };
 
-
 const handleUpdate = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-
   const document = {
     id: store.item.id,
     name: el.find('input[name=name]').val(),
@@ -261,15 +247,12 @@ const handleDetails = function (event) {
   const store = event.data;
   const el = $(event.target);
   const id = el.closest('tr').attr('id');
-
   api.details(id)
     .then(response => {
       store.item = response;
       renderDetail(store);
-
       store.view = 'detail';
       renderPage(store);
-
     }).catch(err => {
       store.error = err;
     });
@@ -279,7 +262,6 @@ const handleRemove = function (event) {
   event.preventDefault();
   const store = event.data;
   const id = store.item.id;
-
   api.remove(id, store.token)
     .then(() => {
       store.list = null; //invalidate cached list results
@@ -294,7 +276,6 @@ const handleViewAbout = function(event) {
   console.log(event.data)
   const store = event.data;
   store.view = 'about';
-  // renderAbout();
   renderPage(store);
 };
 
@@ -320,7 +301,6 @@ const handleViewEdit = function (event) {
   const store = event.data;
   // renderEdit(store);
   editTable(store);
-
   store.view = 'edit';
   renderPage(store);
 };
@@ -338,7 +318,7 @@ jQuery(function ($) {
 
   $('#create').on('submit', STORE, handleCreate);
   $('#search').on('submit', STORE, handleSearch);
-  $('#edit').on('submit', STORE, handleUpdate);
+  $('#edit').on('submit', 'edit-button', STORE, handleUpdate);
 
   $('#result').on('click', '.detail', STORE, handleDetails);
   $('#detail').on('click', '.remove', STORE, handleRemove);
