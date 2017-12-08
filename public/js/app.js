@@ -13,27 +13,6 @@ const renderPage = function (store) {
   }
 };
 
-// const renderAbout = function() {
-//   const aboutText =  `<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium 
-//   voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, 
-//   similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. 
-//   Et harum quidem rerum facilis est et expedita distinctio. 
-//   Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
-//   omnis voluptas assumenda est, omnis dolor repellendus. 
-//   Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. 
-//   Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-// <p>Et harum quidem rerum facilis est et expedita distinctio. 
-//   Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
-//   omnis voluptas assumenda est, omnis dolor repellendus. 
-//   Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. </p>
-// <p>Founding Contributors:</p>
-// <ul>
-//   <li>Kayla R. Webb</li>
-//   <li>Firoz Kamdar</li>
-// </ul>`;
-//   $('#about').append(aboutText);
-// };
-
 
 const renderResults = function (store) {
   const listItems = store.list.map((item) => {
@@ -59,12 +38,6 @@ const renderResultsTable = function() {
   $('#result').append(columns);
 };
 
-// const renderEdit = function (store) {
-//   const el = $('#edit');
-//   const item = store.item;
-//   el.find('[name=name]').val(item.name);
-//   el.find('[name=servingsize]').val(item.servingSize);
-// }; 
 
 const editTable = function(store) {
   const item = store.item;
@@ -193,43 +166,35 @@ const handleSort = function(event) {
   const el = $(event.target);
   const items = store.list;
 
-  // if (store.view === 'search') {
-  //   let query = {
-  //     sort: 'asc'
-  //   };
-  //   api.search(query)
-  //     .then(response => {
-  //       renderResults(response);
-  //       store.view = 'search';
-  //       renderPage(store);
-  //     });
-  // }
+  if (store.sortingToggle === true) {
+    let query = {
+      sort: 'asc'
+    };
+    api.search(query)
+      .then(response => {
+        store.list = response;
+        renderResults(response);
+        store.view = 'search';        
+        store.sortingToggle = false;
+        renderPage(store);
+      });
+  }
+  else {
+    let query = {
+      sort:'desc'
+    };
+    api.search(query)
+      .then(response => {
+        store.list = response;
+        renderResults(store);
+        store.view = 'search';
+        store.sortingToggle = true;
+        renderPage(store);
+      }).catch(err => {
+        console.error(err);
+      });
+  }
   
-  let query = {
-    sort:'desc'
-  };
-  api.search(query)
-    .then(response => {
-      store.list = response;
-      renderResults(store);
-      store.view = 'search';
-      renderPage(store);
-    }).catch(err => {
-      console.error(err);
-    });
-
-  // const desc = items.sort(function(a, b){
-
-  //   return b.totalCals - a.totalCals;
-  // });
-  // renderResults(store);
-  // renderPage(store);
-
-  // const toggle = items.sort(function(a, b){
-  //   if (desc) {
-  //     return a.totalCals - b.totalCals;      
-  //   }
-  // });
 };
 
 
@@ -238,6 +203,7 @@ const handleSearch = function (event) {
   const store = event.data;
   const el = $(event.target);
   var query;
+  store.sortingToggle = false;
 
   api.search(query)
     .then(response => {
@@ -364,7 +330,6 @@ const handleViewList = function (event) {
 const handleViewEdit = function (event) {
   event.preventDefault();
   const store = event.data;
-  // renderEdit(store);
   editTable(store);
 
   store.view = 'edit';

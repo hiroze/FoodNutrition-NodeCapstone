@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
@@ -11,14 +12,15 @@ const data = require('./db/seed-data');
 
 mongoose.Promise = global.Promise;
 
-app.use(express.static('public'));
+app.use(morgan('common'));
 
+app.use(express.static('public'));
 
 app.use(bodyParser.json());
 
 // ===== GET =====
 app.get('/v1/items', (req, res) => {
-  console.log(req.query);
+
   if (req.query.sort === 'desc') {
     FoodNutrition
       .find()
@@ -27,7 +29,7 @@ app.get('/v1/items', (req, res) => {
       .then(items => items.sort(function(a,b) {
         return b.totalCals - a.totalCals;
       }))
-      .then(results => res.status(200).json(results));
+      .then(results => res.json(results));
   }
   if (req.query.sort === 'asc') {
     FoodNutrition
@@ -37,8 +39,9 @@ app.get('/v1/items', (req, res) => {
       .then(items => items.sort(function(a,b) {
         return a.totalCals - b.totalCals;
       }))
-      .then(results => res.status(200).json(results));
+      .then(results => res.json(results));
   }
+
 
   FoodNutrition
     .find()
@@ -63,9 +66,6 @@ app.post('/v1/items', jsonParser, (req,res) => {
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
-    // if (req.body.name == undefined) {
-    //   return res.status(400).json({message: 'name required'});
-    // }
 
     if (req.body.name.length === 0) {
       const msg = 'Name cannot be empty';
@@ -132,7 +132,6 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
   if (req.body.name === emptyStr) {
     res.status(400).send('Name cannot be empty');
   }
-  //add validation for null and negative numbers
 
   const edited = {};
   const editableItems = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
