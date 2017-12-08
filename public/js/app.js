@@ -358,7 +358,7 @@ jQuery(function ($) {
   $('#create').on('submit', STORE, handleCreate);
   $('#search').on('submit', STORE, handleSearch);
   $('#edit').on('submit', STORE, handleUpdate);
-  // $('#result').first('input').on('click', '#sortCals', STORE, handleSort);
+  $('#result').first('input').on('click', '#sortCals', STORE, handleSort);
 
   $('#result').on('click', '.detail', STORE, handleDetails);
   $('#detail').on('click', '.remove', STORE, handleRemove);
