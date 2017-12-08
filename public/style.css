@@ -8,6 +8,7 @@
 body {
   width: 960px;
   height: 900px;
+  margin: auto;
   
 }
 
@@ -17,13 +18,20 @@ body {
   margin-left: 0;
   padding: 0px;
   text-align:center;
-  border: solid red 1px;
+  /* border: solid red 1px; */
 }
 
 form, section {
   margin-top: 10px;
+  
 }
 
+.homePageResult {
+  display: block;
+  margin: auto;
+  padding-left: 50px;
+
+}
 label {
   height: 20px;
   width: 150px;

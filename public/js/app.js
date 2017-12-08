@@ -35,6 +35,7 @@ const renderPage = function (store) {
 // };
 
 
+// ===== RENDER FUNCTIONS =====
 const renderResults = function (store) {
   const listItems = store.list.map((item) => {
     return `<tr id="${item.id}">
@@ -60,7 +61,7 @@ const renderResultsTable = function() {
 const editTable = function(store) {
   const item = store.item;
   const table = `
-<form>
+ <form>
   <table class='tableDetailView' id='${item.id}'>
   <thead>
     <tr>
@@ -77,15 +78,15 @@ const editTable = function(store) {
     </tr>
     <tr>
       <td id='fat'><label for="fat">Fat(g):</label></td> 
-      <td><input name='fat' type='number' min="1" value='${item.fat}'</td>
+      <td><input name='fat' type='number' min="0" value='${item.fat}'</td>
     </tr>
      <tr>
       <td id='carbs'><label for="carbs">Carbs(g):</label></td>
-      <td><input name='carbs' type='number' min="1" value='${item.carbs}'</td> 
+      <td><input name='carbs' type='number' min="0" value='${item.carbs}'</td> 
       </tr>
       <tr>
         <td id='protein'><label for="protein">Protein(g):</label></td> 
-        <td><input name='protein' type='number' min="1" value='${item.protein}'</td>
+        <td><input name='protein' type='number' min="0" value='${item.protein}'</td>
       </tr>
       <tr>
         <td id='cals'><label for="cals">
@@ -99,40 +100,37 @@ const editTable = function(store) {
   $('.nutritionEdit').empty().append(table);
 };
 
-
-
 const renderCreate = function (store) {  
   const el = $('#create');
   const item = store.item;
   const createTable = `            
- <div class='container'>
-    <div>
-      <label for="name">Name</label>
-      <input type="text" name="name" pattern="^(?![0-9]*$)[a-zA-Z0-9!#$%^&*()+=,.?_'’ ]+$" 
-      title="All number entries not allowed." placeholder=" e.g. Granny Smith Apple" required>               
+    <div class='container'>
+      <div>
+        <label for="name">Name</label>
+        <input name="name" placeholder="e.g. Granny Smith Apple" required="" type="text" 
+        pattern="^(?![0-9]*$)[a-zA-Z0-9!#$%^&*()+=,.?_'’ ]+$" title="All number entries not allowed.">
       </div>
-    <div>
-      <label class="serv-size" for="servingSize">Serving Size</label>
-      <input type="number" name="servingSize" min="1" required>
-    </div>
-    <div>
-      <label for="fat">Fat (g)</label>
-      <input type="number" name="fat" min="0" required>
-    </div>
-    <div>
-      <label for="carbs">Carbs (g)</label>
-      <input type="number" name="carbs" min="0" required>
-    </div>
-    <div>
-      <label for="protein">Protein (g)</label>
-      <input type="number" name="protein" min="0" required>
-    </div>
-    <button type="submit" name="create-button">Submit</button>
- </div>  
-     `;
+      <div>
+        <label class="serv-size" for="servingSize">Serving Size</label>
+        <input name="servingSize" type="text" required>
+      </div>
+      <div>
+        <label for="fat">Fat (g)</label>
+        <input name="fat" type='number' min="0" required>
+      </div>
+      <div>
+        <label for="carbs">Carbs (g)</label>
+        <input name="carbs" type='number' min="0" required>
+      </div>
+      <div>
+        <label for="protein">Protein (g)</label>
+        <input name="protein" type='number' min="0" required>
+      </div>
+    <button type="submit">Submit</button>
+  </div> 
+    `;
 $('#create').empty().append(createTable);
 };
-
 
 const renderDetail = function (store) {
   const item = store.item;
@@ -172,6 +170,7 @@ const renderDetail = function (store) {
   $('.nutritionTable').empty().append(detailTable);
 };
 
+// ===== HANDLERS =====
 
 const handleSearch = function (event) {
   event.preventDefault();
@@ -243,7 +242,6 @@ const handleUpdate = function (event) {
     });
 };
 
-
 const handleDetails = function (event) {
   event.preventDefault();
   const store = event.data;
@@ -288,6 +286,7 @@ const handleViewCreate = function (event) {
   store.view = 'create';
   renderPage(store);
 };
+
 const handleViewList = function (event) {
   event.preventDefault();
   const store = event.data;
@@ -298,6 +297,7 @@ const handleViewList = function (event) {
   store.view = 'search';
   renderPage(store);
 };
+
 const handleViewEdit = function (event) {
   event.preventDefault();
   const store = event.data;
@@ -306,6 +306,7 @@ const handleViewEdit = function (event) {
   store.view = 'edit';
   renderPage(store);
 };
+
 
 //on document ready bind events
 jQuery(function ($) {
