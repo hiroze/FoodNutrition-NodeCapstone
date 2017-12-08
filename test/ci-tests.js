@@ -9,6 +9,7 @@ const { app, runServer, closeServer } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 const  FoodNutrition  = require('../db/models');
 const testData = require('../db/seed-data');
+const appSideCode = require('../public/js/app');
 mongoose.Promise = global.Promise;
 
 

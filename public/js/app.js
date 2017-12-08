@@ -53,7 +53,8 @@ const renderResultsTable = function() {
     `<thead>
       <tr>
         <th>Item Name</th>
-        <th>Total Calories</th>
+        <th>Total Calories <input type='button' id='sortCals' value='Sort'></th>
+        </div>
     </thead>`;
   $('#result').append(columns);
 };
@@ -186,6 +187,17 @@ const renderDetail = function (store) {
   $('.nutritionTable').empty().append(detailTable);
 };
 
+const handleSort = function(event) {
+  event.preventDefault();
+  const store = event.data;
+  const el = $(event.target);
+
+  console.log(store.list);
+ console.log('working?');
+
+  renderDetail(store);
+  
+};
 
 const handleSearch = function (event) {
   event.preventDefault();
@@ -344,6 +356,7 @@ jQuery(function ($) {
   $('#create').on('submit', STORE, handleCreate);
   $('#search').on('submit', STORE, handleSearch);
   $('#edit').on('submit', STORE, handleUpdate);
+  $('#result').first('input').on('click', '#sortCals', STORE, handleSort);
 
   $('#result').on('click', '.detail', STORE, handleDetails);
   $('#detail').on('click', '.remove', STORE, handleRemove);
