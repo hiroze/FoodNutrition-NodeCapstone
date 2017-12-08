@@ -192,13 +192,31 @@ const handleSort = function(event) {
   const store = event.data;
   const el = $(event.target);
   const items = store.list;
-  let desc;
+
+  // if (store.view === 'search') {
+  //   let query = {
+  //     sort: 'asc'
+  //   };
+  //   api.search(query)
+  //     .then(response => {
+  //       renderResults(response);
+  //       store.view = 'search';
+  //       renderPage(store);
+  //     });
+  // }
   
   let query = {
-    sort: desc
+    sort:'desc'
   };
   api.search(query)
-    .then(response => console.log('hello', api, response));
+    .then(response => {
+      store.list = response;
+      renderResults(store);
+      store.view = 'search';
+      renderPage(store);
+    }).catch(err => {
+      console.error(err);
+    });
 
   // const desc = items.sort(function(a, b){
 
@@ -319,7 +337,7 @@ const handleRemove = function (event) {
 
 const handleViewAbout = function(event) {
   event.preventDefault();
-  console.log(event.data)
+  console.log(event.data);
   const store = event.data;
   store.view = 'about';
   // renderAbout();

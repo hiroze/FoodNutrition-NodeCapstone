@@ -18,6 +18,28 @@ app.use(bodyParser.json());
 
 // ===== GET =====
 app.get('/v1/items', (req, res) => {
+  console.log(req.query);
+  if (req.query.sort === 'desc') {
+    FoodNutrition
+      .find()
+      .then(result => 
+        result.map(item => item.apiRepr()))
+      .then(items => items.sort(function(a,b) {
+        return b.totalCals - a.totalCals;
+      }))
+      .then(results => res.status(200).json(results));
+  }
+  if (req.query.sort === 'asc') {
+    FoodNutrition
+      .find()
+      .then(result => 
+        result.map(item => item.apiRepr()))
+      .then(items => items.sort(function(a,b) {
+        return a.totalCals - b.totalCals;
+      }))
+      .then(results => res.status(200).json(results));
+  }
+
   FoodNutrition
     .find()
     .then(result => {
@@ -25,16 +47,6 @@ app.get('/v1/items', (req, res) => {
     });
 });
 
-app.get('/v1/items/sort', (req, res) => {
-  FoodNutrition
-    .find()
-    .then(result => 
-      result.map(item => item.apiRepr()))
-    .then(items => items.sort(function(a,b) {
-      return b.totalCals - a.totalCals;
-    }))
-    .then(results => res.status(200).json(results));
-});
 
 // ===== GET by ID =====
 app.get('/v1/items/:id', (req, res) =>{
