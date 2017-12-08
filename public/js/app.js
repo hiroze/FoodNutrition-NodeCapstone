@@ -13,27 +13,6 @@ const renderPage = function (store) {
   }
 };
 
-// const renderAbout = function() {
-//   const aboutText =  `<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium 
-//   voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, 
-//   similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. 
-//   Et harum quidem rerum facilis est et expedita distinctio. 
-//   Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
-//   omnis voluptas assumenda est, omnis dolor repellendus. 
-//   Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. 
-//   Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-// <p>Et harum quidem rerum facilis est et expedita distinctio. 
-//   Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, 
-//   omnis voluptas assumenda est, omnis dolor repellendus. 
-//   Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. </p>
-// <p>Founding Contributors:</p>
-// <ul>
-//   <li>Kayla R. Webb</li>
-//   <li>Firoz Kamdar</li>
-// </ul>`;
-//   $('#about').append(aboutText);
-// };
-
 
 // ===== RENDER FUNCTIONS =====
 const renderResults = function (store) {
@@ -53,7 +32,8 @@ const renderResultsTable = function() {
     `<thead>
       <tr>
         <th>Item Name</th>
-        <th>Total Calories</th>
+        <th>Total Calories <input type='button' id='sortCals' value='Sort'></th>
+        </div>
     </thead>`;
   $('#result').append(columns);
 };
@@ -171,18 +151,51 @@ const renderDetail = function (store) {
 };
 
 // ===== HANDLERS =====
+const handleSort = function(event) {
+  event.preventDefault();
+  const store = event.data;
+  const el = $(event.target);
+  const items = store.list;
+
+  if (store.sortingToggle === true) {
+    let query = {
+      sort: 'asc'
+    };
+    api.search(query)
+      .then(response => {
+        store.list = response;
+        renderResults(response);
+        store.view = 'search';        
+        store.sortingToggle = false;
+        renderPage(store);
+      });
+  }
+  else {
+    let query = {
+      sort:'desc'
+    };
+    api.search(query)
+      .then(response => {
+        store.list = response;
+        renderResults(store);
+        store.view = 'search';
+        store.sortingToggle = true;
+        renderPage(store);
+      }).catch(err => {
+        console.error(err);
+      });
+  }
+  
+};
+
 
 const handleSearch = function (event) {
   event.preventDefault();
   const store = event.data;
   const el = $(event.target);
-  // const title = el.find('[name=title]').val();
   var query;
-  if (name) {
-    query = {
-      name: el.find('[name=title]').val()
-    };
-  }
+  store.sortingToggle = false;
+
   api.search(query)
     .then(response => {
       store.list = response;
@@ -273,7 +286,7 @@ const handleRemove = function (event) {
 
 const handleViewAbout = function(event) {
   event.preventDefault();
-  console.log(event.data)
+  console.log(event.data);
   const store = event.data;
   store.view = 'about';
   renderPage(store);
@@ -301,7 +314,6 @@ const handleViewList = function (event) {
 const handleViewEdit = function (event) {
   event.preventDefault();
   const store = event.data;
-  //renderEdit(store);
   editTable(store);
   store.view = 'edit';
   renderPage(store);
@@ -321,7 +333,8 @@ jQuery(function ($) {
 
   $('#create').on('submit', STORE, handleCreate);
   $('#search').on('submit', STORE, handleSearch);
-  $('#edit').on('submit',  STORE, handleUpdate);
+  $('#edit').on('submit', STORE, handleUpdate);
+  $('#result').first('input').on('click', '#sortCals', STORE, handleSort);
 
   $('#result').on('click', '.detail', STORE, handleDetails);
   $('#detail').on('click', '.remove', STORE, handleRemove);

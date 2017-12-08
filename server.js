@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const { PORT, DATABASE_URL } = require('./config');
@@ -11,16 +12,42 @@ const data = require('./db/seed-data');
 
 mongoose.Promise = global.Promise;
 
+app.use(morgan('common'));
+
 app.use(express.static('public'));
+
 app.use(bodyParser.json());
 
 // ===== GET =====
 app.get('/v1/items', (req, res) => {
+
+  if (req.query.sort === 'desc') {
+    FoodNutrition
+      .find()
+      .then(result => 
+        result.map(item => item.apiRepr()))
+      .then(items => items.sort(function(a,b) {
+        return b.totalCals - a.totalCals;
+      }))
+      .then(results => res.json(results));
+  }
+  if (req.query.sort === 'asc') {
+    FoodNutrition
+      .find()
+      .then(result => 
+        result.map(item => item.apiRepr()))
+      .then(items => items.sort(function(a,b) {
+        return a.totalCals - b.totalCals;
+      }))
+      .then(results => res.json(results));
+  }
+
+
   FoodNutrition
     .find()
     .then(result => {
       res.json(result.map(item => item.apiRepr()));
-    })
+    });
 });
 
 // ===== GET by ID =====
@@ -35,13 +62,10 @@ app.get('/v1/items/:id', (req, res) =>{
 // ===== POST =====
 app.post('/v1/items', jsonParser, (req,res) => {
 
-  const emptyStr = "";
+  const emptyStr = '';
   const requiredFields = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
-    // if (req.body.name == undefined) {
-    //   return res.status(400).json({message: 'name required'});
-    // }
 
     if (req.body.name.length === 0) {
       const msg = 'Name cannot be empty';
@@ -51,7 +75,7 @@ app.post('/v1/items', jsonParser, (req,res) => {
     if (Number(req.body.name)) {
       const msg = 'Name must contain letters';
       return res.status(400).send(msg);
-    } 
+    }
 
     if (req.body.servingSize < 0 || req.body.servingSize === null || req.body.servingSize === emptyStr ) {
       const msg = 'Serving size cannot be empty or negative.';
@@ -93,8 +117,9 @@ app.post('/v1/items', jsonParser, (req,res) => {
 
 // ===== PUT =====
 app.put('/v1/items/:id', jsonParser, (req,res) => {
-  //checks if id and body match
-  const emptyStr = "";
+//checks if id and body match
+  console.log(req.body);
+  const emptyStr = '';
   if ((req.params.id) !== req.body.id) {
     const msg = `Request id ${req.params.id} and request body id ${req.body.id} must match.` ;
     res.status(400).json({message: msg});
@@ -102,7 +127,6 @@ app.put('/v1/items/:id', jsonParser, (req,res) => {
   if (req.body.name === emptyStr) {
     res.status(400).send('Name cannot be empty');
   }
-  //add validation for null and negative numbers
   const edited = {};
   const editableItems = ['name', 'servingSize', 'fat', 'carbs', 'protein'];
   editableItems.forEach(function(item) {
