@@ -196,12 +196,8 @@ const handleSort = function(event) {
   const desc = items.sort(function(a, b){
     return b.totalCals - a.totalCals;
   });
-  console.log(desc);
-
-
- console.log('working?');
-
-  renderDetail(store);
+  renderResults(store);
+  renderPage(store);
   
 };
 
