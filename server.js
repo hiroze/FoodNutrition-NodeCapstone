@@ -29,25 +29,32 @@ app.get('/v1/items', (req, res) => {
       .then(items => items.sort(function(a,b) {
         return b.totalCals - a.totalCals;
       }))
-      .then(results => res.json(results));
+      .then(results => {
+        console.log(results)
+        res.json(results)}
+      );
   }
-  if (req.query.sort === 'asc') {
+  else if (req.query.sort === 'asc') {
     FoodNutrition
       .find()
       .then(result => 
         result.map(item => item.apiRepr()))
       .then(items => items.sort(function(a,b) {
+        console.log(items);
         return a.totalCals - b.totalCals;
       }))
-      .then(results => res.json(results));
+      .then(results => {
+        console.log(results);
+        res.json(results)
+      });
+  } else {
+    FoodNutrition
+      .find()
+      .then(result => {
+        res.json(result.map(item => item.apiRepr()));
+      });
   }
 
-
-  FoodNutrition
-    .find()
-    .then(result => {
-      res.json(result.map(item => item.apiRepr()));
-    });
 });
 
 // ===== GET by ID =====

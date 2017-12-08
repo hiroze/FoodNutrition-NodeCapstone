@@ -9,8 +9,10 @@ body {
   width: 960px;
   height: 900px;
   margin: auto;
+;
   
 }
+
 
 .container {
   height: 400px;
@@ -72,12 +74,13 @@ td > a {
   text-decoration: none;
 }
 
-/* .viewSearch,
+.viewSearch,
 .viewAbout,
 .viewCreate {
   outline: 1px solid transparent;
-  border: solid green;
-} */
+  /* border: solid green; */
+  text-decoration: none;
+}
 
 #search,
 #detail,

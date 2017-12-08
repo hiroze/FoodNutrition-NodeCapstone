@@ -109,7 +109,7 @@ const renderCreate = function (store) {
     <button type="submit">Submit</button>
   </div> 
     `;
-$('#create').empty().append(createTable);
+  $('#create').empty().append(createTable);
 };
 
 const renderDetail = function (store) {
@@ -164,13 +164,12 @@ const handleSort = function(event) {
     api.search(query)
       .then(response => {
         store.list = response;
-        renderResults(response);
-        store.view = 'search';        
+        renderResults(store);
+        // store.view = 'search';        
         store.sortingToggle = false;
         renderPage(store);
       });
-  }
-  else {
+  } else {
     let query = {
       sort:'desc'
     };
@@ -186,6 +185,7 @@ const handleSort = function(event) {
       });
   }
   
+  
 };
 
 
@@ -194,7 +194,7 @@ const handleSearch = function (event) {
   const store = event.data;
   const el = $(event.target);
   var query;
-  store.sortingToggle = false;
+  store.sortingToggle = null;
 
   api.search(query)
     .then(response => {
@@ -329,6 +329,7 @@ jQuery(function ($) {
     query: {},          // search query values
     list: null,         // search result - array of objects (documents)
     item: null,         // currently selected document
+    sortingToggle: false
   };
 
   $('#create').on('submit', STORE, handleCreate);
